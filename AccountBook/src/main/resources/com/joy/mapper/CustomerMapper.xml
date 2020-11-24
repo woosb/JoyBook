@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joy.mapper.CustomerMapper">
+	
+	<!-- 피드 등록 -->
+	<insert id="registerCustomer">
+		insert into 
+		customer_table (
+			designer_id,
+			visitType, content,
+			sex,
+			date,
+			price,
+			reservationRoute,
+			ticket) 
+		values(
+			#{designer_id}, 
+			#{visitType},
+			#{content}, 
+			#{sex},
+			#{date},
+			#{price},
+			#{reservationRoute},
+			#{ticket})
+	</insert>
+	
+	<select id="getAllCustomerWithId" resultType = "com.joy.domain.CustomerVO">
+		select 
+			* 
+		from 
+			customer_table 
+		where 
+			designer_id = #{userId} 
+		order by 
+			date_format(date,'%Y') desc
+	</select>
+	
+	<select id="selectAll" resultType = "com.joy.domain.CustomerVO">
+		select * from customer_table
+	</select>
+	
+	<delete id="removeCustomer">
+		DELETE from customer_table where cus_no = #{cus_no}
+	</delete>
+	
+	<update id="modifyCustomer">
+		UPDATE customer_table SET visitType = #{visitType}, content = #{content}, 
+			sex = #{sex}, date = #{date}, price = #{price}, reservationRoute = #{reservationRoute},	ticket = #{ticket} where cus_no = #{cus_no};
+	</update>
+	
+	<select id="getTotalCount" resultType="Integer">
+		select count(*) from customer_table where 
+		
+		<include refid="criteria"></include>
+		
+		designer_id=#{designer_id}
+		 
+	</select>
+	
+	
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'T'.toString()">
+							visitType like CONCAT('%',#{keyword},'%')
+						</when>
+						<when test="type == 'C'.toString()">
+							content like CONCAT('%',#{keyword},'%')
+						</when>
+						<when test="type == 'W'.toString()">
+							ReservationRoute like CONCAT('%',#{keyword},'%')
+						</when>
+						<when test="type == 'A'.toString()">
+							sex like CONCAT('%',#{keyword},'%')
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<select id="getAllCustomerWithPaging" resultType = "com.joy.domain.CustomerVO">
+		select * from 
+			customer_table 
+		where 
+		  <include refid="criteria"></include>  
+		
+		designer_id = #{designer_id} 
+		limit #{limitStart}, #{amount};
+	</select>
+	
+</mapper>

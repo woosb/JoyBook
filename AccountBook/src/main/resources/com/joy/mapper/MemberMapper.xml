@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joy.mapper.MemberMapper">
+	
+	<!-- 피드 등록 -->
+	<insert id="signUp">
+		insert into member_table
+			(userId, userPw, userName, regDate, updateDate)
+		values
+			(#{userId}, #{userPw}, #{userName}, #{regDate}, #{updateDate})
+	</insert>
+	
+	<resultMap type="com.joy.domain.MemberVO" id="memberMap">
+		<!-- property : VO프로퍼티 명, column : db 필드 명 -->
+		<id property="userId" column="userId"/>
+		<result property="userId" column="userId"/>
+		<result property="userPw" column="userPw"/>
+		<result property="userName" column="userName"/>
+		<result property="regDate" column="regDate"/>
+		<result property="updateDate" column="updateDate"/>
+		<collection property="authList" resultMap="authMap"/>
+	</resultMap>
+	
+	<resultMap type="com.joy.domain.AuthVO" id="authMap">
+		<result property="userId" column="userId"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+	
+	<select id="read" resultMap="memberMap">
+		select
+			mem.userid, mem.userpw, mem.username, mem.enabled, mem.regdate, updateDate, auth
+		from
+			member_table mem left outer join member_auth_table auth on mem.userid = auth.userid
+		where mem.userid = #{userId}
+	</select>
+	
+	<insert id="setAuth">
+		insert into member_auth_table
+			(userId, auth)
+		values
+			(#{userId},"ROLE_MEMBER")
+	</insert>
+</mapper>

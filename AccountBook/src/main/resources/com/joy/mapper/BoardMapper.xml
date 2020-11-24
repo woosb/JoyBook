@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joy.mapper.BoardMapper">
+	
+	<select id="selectList" resultType="com.joy.domain.BoardVO">
+		select 
+			*
+		from 
+			board 
+		where 
+			step = 0 
+		order by 
+			id desc
+		limit #{limitStart}, #{amount};
+	</select>
+	
+	<select id="selectDetail" resultType="com.joy.domain.BoardVO">
+		select
+			*
+		from
+			board
+		where
+			id=#{id}
+	</select>
+	
+	<insert id="insert">
+		insert into 
+		board
+			(userId, title, content, regDate, ref)
+		values
+			(#{userId}, #{title}, #{content}, #{regDate}, #{ref})
+	</insert>
+	
+	<update id="updateHit">
+		update 
+			board
+		set 
+			hit = hit+1 
+		where id = #{id};
+	</update>
+	<delete id="delete">
+		delete from
+			board
+		where id=#{id}
+	</delete>
+	
+	<update id="modify">
+		update 
+			board 
+		set 
+			title   = #{title}, 
+			content = #{content}, 
+			updateDate = #{updateDate} 
+		where 
+			id=#{id}
+	</update>
+	
+	<update id="recommend">
+		update 
+			board
+		set
+			recommend = recommend+1
+		where
+			id=#{id}
+	</update>
+	
+	<select id="getMaxRef" resultType="Integer">
+		select 
+			max(Ref)
+		from 
+			board
+	</select>
+	
+	<update id="updateAnswerNum">
+		update 
+			board 
+		set 
+			answerNum = answerNum+1
+		where
+			id = #{id}
+	</update>
+	
+	<update id="reply">
+		insert into 
+			board(
+				userId, 
+				content, 
+				regDate, 
+				updateDate, 
+				recommend, 
+				ref, 
+				step, 
+				refOrder, 
+				parentNum)
+			values(
+				#{userId}, 
+				#{content}, 
+				#{regDate},
+				#{updateDate}, 
+				#{recommend}, 
+				#{ref},
+				#{step},
+				#{refOrder},
+				#{parentNum})	
+	</update>
+	
+	<select id="selectReply" resultType="com.joy.domain.BoardVO">
+		select 
+			* 
+		from
+			board
+		where
+			ref = #{ref}
+		order by
+			refOrder
+	</select>
+	
+	<select id="getTotal" resultType="Integer">
+		select 
+			count(*) 
+		from
+			board
+		where step = 0
+	</select>
+	
+	<update id="updateRef">
+		update 
+			board 
+		set 
+			refOrder = refOrder+1 
+		where 
+			ref = #{ref} 
+		and 
+			refOrder > #{refOrder};		
+	</update>
+</mapper>

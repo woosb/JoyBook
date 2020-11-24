@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joy.mapper.IncomeMapper">
+
+	<select id="getMonthlyIncomeList"  resultType="com.joy.domain.DateIncomeVO">
+		select 
+        	date_format(date, '%Y %m') as date, 
+			sum(price) as income 
+		from
+			customer_table
+		where
+			date_format(date, '%Y') = #{date}
+		and 
+			designer_id = #{designer_id}
+		group by 
+			date_format(date,'%Y %m')
+		order by
+			date_format(date,'%Y %m');
+	</select>
+	
+	<select id="getAnnualIncomeList" resultType="com.joy.domain.DateIncomeVO">
+		select
+			date_format(date, '%Y') as date,
+			sum(price) as income
+		from 
+			customer_table 
+		where 
+			designer_id = #{designer_id}
+		and 
+		<![CDATA[
+			date_format(date,'%Y') <= #{date}
+		]]>
+		group by 
+			date_format(date, '%Y') 
+		order by 
+			date_format(date, '%Y') asc
+		limit 10;
+	</select>
+	
+	<select id="getMonthIncome" resultType="com.joy.domain.DateIncomeVO">
+        select 
+        	date_format(date, '%Y %m') as date, 
+        	sum(price) as income
+        from 
+        	customer_table 
+        where 
+        	designer_id =#{designer_id} 
+        and 
+        	date_format(date, '%Y %m') = #{date}
+       	 group by 
+       	 	date_format(date, '%Y %m');
+	</select>
+	
+	<select id="getAnnualIncome" resultType="com.joy.domain.DateIncomeVO">
+	    select 
+	    	date_format(date, '%Y') as date,
+	    	sum(price) as income 
+	    from 
+	    	customer_table
+		where
+			designer_id = #{designer_id} 
+        and 
+			date_format(date, '%Y' ) = #{date}
+		group by 
+			date_format(date,'%Y' );
+	</select>
+	
+	<select id="getIncomeByReservationRoute"  resultType="com.joy.domain.DateIncomeVO">
+			select
+				sum(price) as income, 
+				reservationRoute 
+			from 
+				customer_table 
+			where 
+				date_format(date, '%Y %m') =#{date}
+			and 
+				designer_id=#{designer_id} 
+			group by
+				ReservationRoute;	
+	</select>
+</mapper>
