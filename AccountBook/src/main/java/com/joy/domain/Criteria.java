@@ -32,7 +32,8 @@ public class Criteria {
 		this.pageNum = pageNum;
 		this.amount = amount;
 	}
-
+	
+	//mapper에서 <foreach item='type' collection="typeArr">에 사용하기 위해 getter를 만들어 준 것이다.
 	public String[] getTypeArr() {
 		return type == null? new String[] {} : type.split("");
 	}

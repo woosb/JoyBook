@@ -36,7 +36,8 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class BoardController {
 	
-	final int cookieAge = 1*24*60*60;
+//	final int cookieAge = 1*24*60*60;
+	final int cookieAge = 10;
 	
 	@Setter(onMethod_ = @Autowired)
 	BoardService service;

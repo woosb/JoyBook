@@ -72,14 +72,13 @@
 
 		<div>
 			<c:if test="${pageMaker.prev}">
-				<li class="paginate_button page-item previous" id="dataTable_previous"><a href="${pageMaker.startPage -1 }" class="page-link">Previous</a></li>
+				<a href="/customer/list?pageNum=${pageMaker.startPage -1 }">이전</a>
 			</c:if>
 			<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
-				<li class="paginate_button page-item active">
-				<a href="${num }" aria-controls="dataTable" data-dt-idx="${num }" tabindex="0" class="page-link">${num }</a></li>
+				<a href="/customer/list?pageNum=${num }"><c:out value="${num }"/></a>
 			</c:forEach>
 			<c:if test="${pageMaker.next }">
-				<li class="paginate_button page-item next" id="dataTable_next"><a href="${pageMaker.endPage + 1 }" class="page-link">Next</a></li>
+				<a href="/customer/list?pageNum=${pageMaker.endPage + 1 }">다음</a>
 			</c:if>
 		</div>		
 		<form id="actionForm" action="/customer/list" method="get">
@@ -121,17 +120,17 @@
 			self.location = "/customer/register";
 		});
 		
-		var actionForm = $("#actionForm");
+// 		var actionForm = $("#actionForm");
 		
-		$(".paginate_button a").on("click", function(e){
+// 		$(".paginate_button a").on("click", function(e){
 			
-			e.preventDefault(); // <a href="${num }">${num }</a> 태그를 클릭해도 이동이 없도록 하는 메소드
-			console.log('click');
+// 			e.preventDefault(); // <a href="${num }">${num }</a> 태그를 클릭해도 이동이 없도록 하는 메소드
+// 			console.log('click');
 			
-			// 여기서 this 는 .pagination_button a 이다 이 태그의 href의 속성 value 를  가져와서 input에 값에 추가해 준다.
-			actionForm.find("input[name='pageNum']").val($(this).attr("href")); 
-			actionForm.submit();
-		});
+// 			// 여기서 this 는 .pagination_button a 이다 이 태그의 href의 속성 value 를  가져와서 input에 값에 추가해 준다.
+// 			actionForm.find("input[name='pageNum']").val($(this).attr("href")); 
+// 			actionForm.submit();
+// 		});
 		
 		/* 게시판 클릭시 세부정보
 		$(".move").on("click", function(e){

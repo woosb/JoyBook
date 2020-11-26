@@ -47,7 +47,8 @@
 		<li class="paginate_button"><a href="${pageMaker.startPage -1 }">Previous</a></li>
 	</c:if>
 	<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
-		<li class="paginate_button"><a href="${num }" >${num }</a></li>
+<%-- 		<li class="paginate_button"><a href="${num }" >${num }</a></li> --%>
+		<a href="/board/list?pageNum=${num }"><c:out value="${num }"/></a>
 	</c:forEach>
 	<c:if test="${pageMaker.next }">
 		<li class="paginate_button"><a href="${pageMaker.endPage + 1 }">Next</a></li>

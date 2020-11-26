@@ -87,7 +87,7 @@
 		select * from 
 			customer_table 
 		where 
-		  <include refid="criteria"></include>  
+		<include refid="criteria"></include>  
 		
 		designer_id = #{designer_id} 
 		limit #{limitStart}, #{amount};
