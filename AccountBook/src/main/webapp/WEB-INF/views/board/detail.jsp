@@ -64,7 +64,7 @@
 			<th><c:out value="${reply.userId }"/></th>
 			<td>
 				<c:forEach var="i" begin="1" end="${reply.step-1}">
-					re->
+					->re
 				</c:forEach>
 			</td>
 			

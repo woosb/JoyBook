@@ -29,12 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public void registerCustomer(CustomerVO customer) {
 		log.info("register........." + customer);
-		
-		Calendar cal = Calendar.getInstance();
-		cal.set(2019, Calendar.DECEMBER , 2);
-//		Date date = new Date();
-//		customer.setDate(date);
-		Date date = cal.getTime();
+		Date date = new Date();
 		customer.setDate(date);
 		mapper.registerCustomer(customer);
 	}

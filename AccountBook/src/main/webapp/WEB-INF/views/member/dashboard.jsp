@@ -15,7 +15,7 @@
 	<table border="1">
 		<c:forEach items="${annualIncome }"  var="income">
 			<tr>
-				<td>**<c:out value="${ income.date}"/>**</td>
+				<td>**<c:out value="${ income.date}"/>년 총 매출</td>
 				<td><c:out value="${ income.income}"/></td>
 			</tr>
 		</c:forEach>
@@ -27,7 +27,7 @@
 		</c:forEach>
 		<c:forEach items="${MonthIncome }"  var="income">
 			<tr>
-				<td>**<c:out value="${ income.date}"/>**</td>
+				<td>**<c:out value="${ income.date}"/>월 총 매출</td>
 				<td><c:out value="${ income.income}"/></td>
 			</tr>
 		</c:forEach>
@@ -39,8 +39,8 @@
 		</c:forEach>
 		<c:forEach items="${IncomeByReservationRoute }"  var="income">
 			<tr>
-				<td>IncomeByReservationRoute</td>
-				<td><c:out value="${ income.income}"/><c:out value="${ income.reservationRoute}"/>**<c:out value="${ income.date}"/>  </td>
+				<td><c:out value="${ income.reservationRoute}"/>/이번년도 이번달</td>
+				<td><c:out value="${ income.income}"/></td>
 			</tr>
 		</c:forEach>
 	</table>
