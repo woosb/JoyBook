@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.joy.domain.BoardVO;
 import com.joy.domain.Criteria;
@@ -52,7 +54,6 @@ public class BoardController {
 		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		log.info("total: " + total);
-
 	}
 	
 	@GetMapping("/detail")

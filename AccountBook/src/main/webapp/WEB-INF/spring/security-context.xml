@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 	
-<!-- 	<bean id="customAccessDenied" class="com.joy.security.CustomAccessDeniedHandler"/> -->
+	<bean id="customAccessDenied" class="com.joy.security.CustomAccessDeniedHandler"/>
 	<bean id="customLoginSuccess" class="com.joy.security.CustomLoginSuccessHandler"/>
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<bean id="customUserDetailsService" class="com.joy.security.CustomUserDetailsService"/>
@@ -22,7 +22,7 @@
 		<security:intercept-url pattern="/member/signUp" access="permitAll"/> 
 		
 		<security:form-login login-page="/member/signIn"  authentication-success-handler-ref="customLoginSuccess" authentication-failure-handler-ref="customAuthenticationFailure"/>
-<!-- 	 	<security:access-denied-handler ref="customAccessDenied"/> -->
+	 	<security:access-denied-handler ref="customAccessDenied"/>
 	 	<security:logout logout-url="/customLogout" invalidate-session="true"/>
 <!-- 	 	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/> -->
 	</security:http>

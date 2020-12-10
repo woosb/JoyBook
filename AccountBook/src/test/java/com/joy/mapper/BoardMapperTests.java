@@ -27,11 +27,9 @@ public class BoardMapperTests {
 	
 	@Test
 	public void register()throws Exception{
-		for(int i = 0; i < 20; ++i) {
-			BoardVO vo = new BoardVO();
-			vo.setTitle("제목"+i);
-			vo.setContent("내용"+i);
-			service.insert(vo);
-		}
+		BoardVO vo = new BoardVO();
+		vo.setTitle("제목");
+		vo.setContent("내용");
+		service.insert(vo);
 	}
 }

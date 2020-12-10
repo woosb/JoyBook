@@ -15,9 +15,5 @@
 		<context:annotation-config></context:annotation-config>
 		
 		<import resource="dbData.xml" />
-		 
-		<mybatis-spring:scan base-package="com.joy.mapper"/>
-		
-		<context:component-scan base-package="com.joy.service"/>
 		
 </beans>

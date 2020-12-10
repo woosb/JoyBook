@@ -24,7 +24,7 @@
 		</tr>
 		<tr>
 			<th>파일첨부</th>
-			<td></td>
+			<td><input type="file" name="uploadFile" multiple></td>
 		</tr>
 	</table>
 	<input type="submit">
