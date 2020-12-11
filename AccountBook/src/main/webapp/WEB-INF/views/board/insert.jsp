@@ -12,7 +12,7 @@
 <%@ include file="../includes/header.jsp" %>
 <div align="center">
 <h1>글 쓰 기 </h1>
-<form action="/board/insert" method="post">
+<form action="/board/insert" method="post" enctype="multipart/form-data">
 	<table border="1">
 		<tr>
 			<th>제목</th>

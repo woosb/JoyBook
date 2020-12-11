@@ -35,9 +35,6 @@ import lombok.extern.log4j.Log4j;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	private MemberService service;
-	private IncomeService incomeService;
 
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -53,61 +50,5 @@ public class HomeController {
 //		model.addAttribute("name", principal.getName());
 		
 		return "/index";
-	}
-	
-	@GetMapping(value = "/member/signIn")
-	public void login() {
-	}
-	@PostMapping(value = "/member/signIn")
-	public void loginCheck() {
-	}
-	@GetMapping(value = "/member/signUp")
-	public void signUp() {
-	}
-	@PostMapping(value = "/member/signUp")
-	public String signUp(MemberVO member) {
-		log.info(member);
-		service.registerMember(member);
-		return "redirect:/member/signIn";
-	}
-	@GetMapping(value= "/member/modify")
-	public void modify(Principal principal, Model model) {
-		String userId = principal.getName();
-		MemberVO member = service.readMember(userId);
-		model.addAttribute("member", member);
-	}
-	@PostMapping(value= "/member/modify")
-	public String modify(MemberVO member) {
-		log.info(member);
-		service.modifyMember(member);
-		return "redirect:/customer/list";
-	}
-	
-	@GetMapping(value = "/member/dashboard")
-	public void dashboard(Model model, Principal principal) {
-//		Calendar cal = Calendar.getInstance();
-//		cal.set(2015, 01, 11);
-//		Date date = cal.getTime();
-		
-		Date date = new Date();
-//		log.info(date);
-		
-		String designer_id = principal.getName();
-		
-		List<DateIncomeVO> annualIncome = incomeService.getAnnualIncome(designer_id, date);
-		model.addAttribute("annualIncome", incomeService.getAnnualIncome(designer_id, date));
-		
-		List<DateIncomeVO> AnnualIncomeList = incomeService.getAnnualIncomeList(designer_id, date);
-		model.addAttribute("AnnualIncomeList", AnnualIncomeList);
-		
-		List<DateIncomeVO> MonthIncome = incomeService.getMonthIncome(designer_id, date);
-		model.addAttribute("MonthIncome", MonthIncome);
-		
-		List<DateIncomeVO> MonthlyIncomeList = incomeService.getMonthlyIncomeList(designer_id, date);
-		model.addAttribute("MonthlyIncomeList", MonthlyIncomeList);
-		
-		List<DateIncomeVO> IncomeByReservationRoute = incomeService.getIncomeByReservationRoute(designer_id, date);
-		model.addAttribute("IncomeByReservationRoute", IncomeByReservationRoute);
-		
 	}
 }

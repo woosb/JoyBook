@@ -1,5 +1,6 @@
 package com.joy.controller;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.multipart.MultipartResolver;
 
 import com.joy.domain.BoardVO;
 import com.joy.domain.Criteria;
@@ -96,8 +98,15 @@ public class BoardController {
 	public void insert() {
 		
 	}
+	
 	@PostMapping("/insert")
-	public String insert(Principal principal, BoardVO vo) {
+	public String insert(Principal principal, BoardVO vo, MultipartFile[] uploadFile) {
+		
+		for(MultipartFile file : uploadFile) {
+			log.info(file.getOriginalFilename());
+			log.info(file.getSize());
+		}
+		
 		String userId = principal.getName();
 		vo.setUserId(userId);
 		service.insert(vo);
@@ -174,4 +183,5 @@ public class BoardController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("detailId", detailId);
 	}
+	
 }
