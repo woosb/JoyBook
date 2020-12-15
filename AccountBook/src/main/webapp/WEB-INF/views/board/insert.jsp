@@ -27,9 +27,10 @@
 			<td><input type="file" name="uploadFile" multiple></td>
 		</tr>
 	</table>
-	<input type="submit">
+	<input type="submit" id="uploadBtn" value="제출하기">
 	<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }"/>
 </form>
+	
 </div>
 <%@ include file="../includes/footer.jsp" %>
 </body>

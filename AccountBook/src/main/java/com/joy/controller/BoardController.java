@@ -1,6 +1,5 @@
 package com.joy.controller;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
@@ -100,12 +99,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/insert")
-	public String insert(Principal principal, BoardVO vo, MultipartFile[] uploadFile) {
-		
-		for(MultipartFile file : uploadFile) {
-			log.info(file.getOriginalFilename());
-			log.info(file.getSize());
-		}
+	public String insert(Principal principal, BoardVO vo) {
 		
 		String userId = principal.getName();
 		vo.setUserId(userId);

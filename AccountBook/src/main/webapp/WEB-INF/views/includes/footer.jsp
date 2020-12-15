@@ -12,6 +12,7 @@
 <i style="color:hotpink; font-size:30px; font-family:Gabriola;">
 Copyright &copy; CARE Lab. All rights reserved.</i>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
 
 </body>
 </html>

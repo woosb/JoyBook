@@ -56,17 +56,13 @@ public class MemberController {
 	
 	@GetMapping(value = "/dashboard")
 	public void dashboard(Model model, Principal principal) {
-//		Calendar cal = Calendar.getInstance();
-//		cal.set(2015, 01, 11);
-//		Date date = cal.getTime();
 		
 		Date date = new Date();
-//		log.info(date);
 		
 		String designer_id = principal.getName();
 		
 		List<DateIncomeVO> annualIncome = incomeService.getAnnualIncome(designer_id, date);
-		model.addAttribute("annualIncome", incomeService.getAnnualIncome(designer_id, date));
+		model.addAttribute("annualIncome", annualIncome);
 		
 		List<DateIncomeVO> AnnualIncomeList = incomeService.getAnnualIncomeList(designer_id, date);
 		model.addAttribute("AnnualIncomeList", AnnualIncomeList);

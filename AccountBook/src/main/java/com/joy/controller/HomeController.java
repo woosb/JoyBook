@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.joy.domain.DateIncomeVO;
 import com.joy.domain.MemberVO;
@@ -41,14 +42,23 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, Principal principal) {
-//		logger.info("Welcome home! The client locale is {}.", locale);
 		Date date = new Date();
 		SimpleDateFormat spdf1 = new SimpleDateFormat("YYYY MM dd");
 		String formattedDate = spdf1.format(date);
 		model.addAttribute("serverTime", formattedDate );
-		
-//		model.addAttribute("name", principal.getName());
-		
+				
 		return "/index";
+	}
+	
+	@GetMapping(value="/test")
+	public void test() {
+		
+	}
+	
+	@PostMapping(value="/test")
+	@ResponseBody
+	public MemberVO test(MemberVO vo) {
+		log.info(vo.toString());
+		return vo;
 	}
 }
