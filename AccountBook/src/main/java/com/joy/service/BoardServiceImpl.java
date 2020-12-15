@@ -65,6 +65,7 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void delete(BoardVO vo) {
+		log.info(vo.toString());
 		mapper.delete(vo);
 	}
 

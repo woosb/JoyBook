@@ -109,9 +109,9 @@ public class BoardController {
 	}
 	
 	@GetMapping("/delete")
-	public String delete(@RequestParam(value="id") String id) {
+	public String delete(@RequestParam(value="ref") String ref) {
 		BoardVO vo = new BoardVO();
-		vo.setId(Integer.parseInt(id));
+		vo.setRef(Integer.parseInt(ref));
 		service.delete(vo);
 		return "redirect:/board/list";
 	}
@@ -129,7 +129,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/recommend")
-	public String recommend(Principal principal,
+	public String recommend(HttpSession session,
 			@RequestParam(value="id") Integer id, 
 			@RequestParam(value="ref") Integer ref, 
 			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -137,7 +137,7 @@ public class BoardController {
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null && cookies.length > 0) {
 			for(Cookie c : cookies) {
-				if(c.getName().equals(URLEncoder.encode("recommend"+id+principal.getName(), "UTF-8"))) {
+				if(c.getName().equals(URLEncoder.encode("recommend"+id+(String)session.getAttribute("userId"), "UTF-8"))) {
                     log.info("처음 쿠키가 생성한 뒤 들어옴.");
 					viewCookie = c;
 				}
@@ -146,7 +146,7 @@ public class BoardController {
 		
 		if(viewCookie == null) {
 			service.recommend(id);
-			Cookie newCookie = new Cookie(URLEncoder.encode("recommend"+id+principal.getName(), "UTF-8"),"recommend");
+			Cookie newCookie = new Cookie(URLEncoder.encode("recommend"+id+(String)session.getAttribute("userId"), "UTF-8"),"recommend");
 			newCookie.setMaxAge(cookieAge);
 			newCookie.setPath("/");
 			response.addCookie(newCookie);

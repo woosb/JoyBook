@@ -14,9 +14,11 @@
   <c:out value="${name }"/>
   ${serverTime }
 		<c:out value="${ serverTime}"/>
-			
-       <div> ${sessionScope.userId }님 안녕하세요.</div>
-
+		<c:if test="${sessionScope.userId != null }">
+       		<div> ${sessionScope.userId }님 안녕하세요.</div>
+		</c:if>	
 <%@ include file="includes/footer.jsp" %>
+<script>
+</script>
 </body>
 </html>

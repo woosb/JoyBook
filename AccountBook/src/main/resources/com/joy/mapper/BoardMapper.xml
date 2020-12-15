@@ -43,7 +43,7 @@
 	<delete id="delete">
 		delete from
 			board
-		where id=#{id}
+		where ref=#{ref}
 	</delete>
 	
 	<update id="modify">

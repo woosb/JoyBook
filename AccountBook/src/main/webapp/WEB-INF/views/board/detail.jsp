@@ -84,7 +84,7 @@
 		</c:forEach>
 	</table>
 	<br>
-	<button onclick="self.location='/board/delete?id='+${detail.id}">삭제</button>
+	<button onclick="self.location='/board/delete?ref='+${detail.ref}">삭제</button>
 	<button onclick="self.location='/board/modify?id='+${detail.id}">수정</button>
 	<button onclick="self.location='/board/list'">뒤로가기</button>
 	<button onclick="self.location='/board/recommend?id=${detail.id}&ref=${detail.ref }'">추천하기</button>
