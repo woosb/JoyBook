@@ -1,12 +1,10 @@
 package com.joy.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.joy.domain.MemberVO;
@@ -19,22 +17,19 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 @Service
-@AllArgsConstructor// ��� �ʵ尪�� �Ķ���ͷ� �޴� �����ڸ� ������ �ش�.
+@AllArgsConstructor
 public class MemberServiceImpl implements MemberService{
 	
 	@Setter(onMethod_=@Autowired)
 	private MemberMapper mapper;
 	
-	//security-contex.xml
-	@Setter(onMethod_=@Autowired)
-	private PasswordEncoder pwencoder;
 	
 	@Override
 	public void registerMember(MemberVO member) {
 		Date date = new Date();
 		member.setRegDate(date);
 		String userPw = member.getUserPw();
-		member.setUserPw(pwencoder.encode(userPw));
+		member.setUserPw(userPw);
 //		log.info(member);
 		mapper.signUp(member);
 		setAuth(1, member);
@@ -54,5 +49,21 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO readMember(String userId) {
 		MemberVO user = mapper.read(userId);
 		return user;
+	}
+	
+	@Override
+	public int signIn(MemberVO vo, HttpSession session) {
+		MemberVO user = null;
+		user = mapper.signIn(vo);
+		if(user != null) {
+			if( user.getUserPw().equals(vo.getUserPw()) ) {
+				session.setAttribute("userId", user.getUserId());
+				return 1;
+			}else {
+				return 0;
+			}
+		}else {
+			return -1;
+		}
 	}
 }

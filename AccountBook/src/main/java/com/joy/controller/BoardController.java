@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,18 +59,18 @@ public class BoardController {
 	}
 	
 	@GetMapping("/detail")
-	public String selectDetail(Principal principal,
+	public String selectDetail(HttpSession session,
 			@RequestParam(value="id") String id ,
 			@RequestParam(value="ref") String ref ,
 			Model model, 
 			HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		
+		String userId = (String)session.getAttribute("userId");
 		Cookie viewCookie = null;
 		Cookie[] cookies = request.getCookies();
 		if(cookies != null && cookies.length > 0) {
 			for(Cookie c : cookies) {
-				if(c.getName().equals(URLEncoder.encode("boardId"+id+principal.getName(), "UTF-8"))) {
+				if(c.getName().equals(URLEncoder.encode("boardId"+id+userId, "UTF-8"))) {
                     log.info("처음 쿠키가 생성한 뒤 들어옴.");
 					viewCookie = c;
 				}
@@ -78,7 +79,7 @@ public class BoardController {
 		
 		if(viewCookie == null) {
 			service.updateHit(Integer.parseInt(id));
-			Cookie newCookie = new Cookie(URLEncoder.encode("boardId"+id+principal.getName(),"UTF-8"),"hit");
+			Cookie newCookie = new Cookie(URLEncoder.encode("boardId"+id+userId,"UTF-8"),"hit");
 			newCookie.setMaxAge(cookieAge);
 			newCookie.setPath("/");
 			response.addCookie(newCookie);
@@ -99,9 +100,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("/insert")
-	public String insert(Principal principal, BoardVO vo) {
+	public String insert(HttpSession session, BoardVO vo) {
 		
-		String userId = principal.getName();
+		String userId = (String)session.getAttribute("userId");
 		vo.setUserId(userId);
 		service.insert(vo);
 		return "redirect:/board/list";
@@ -155,16 +156,16 @@ public class BoardController {
 	}
 	
 	@PostMapping("/reply")
-	public String reply(Principal principal, BoardVO vo) {
-		vo.setUserId(principal.getName());
+	public String reply(HttpSession session, BoardVO vo) {
+		vo.setUserId( (String)session.getAttribute("userId"));
 		service.reply(vo);
 		log.info(vo);
 		return "redirect:/board/detail?id="+vo.getId()+"&ref="+vo.getRef();
 	}
 	
 	@PostMapping("/rereply")
-	public String rereply(Principal principal, BoardVO vo, @RequestParam("detailId") String detailId) {
-		vo.setUserId(principal.getName());
+	public String rereply(HttpSession session, BoardVO vo, @RequestParam("detailId") String detailId) {
+		vo.setUserId((String)session.getAttribute("userId"));
 		vo.setId(vo.getParentNum());
 		log.info(vo);
 		service.reply(vo);

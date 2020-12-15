@@ -1,8 +1,9 @@
 package com.joy.controller;
 
-import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +30,24 @@ public class MemberController {
 	@GetMapping(value = "/signIn")
 	public void login() {
 	}
+	
 	@PostMapping(value = "/signIn")
-	public void loginCheck() {
+	public String loginCheck(MemberVO vo, HttpSession session) {
+		log.info(vo.toString());
+		int result = service.signIn(vo, session);
+		if(result == 1) {
+			return "redirect:/";
+		}else {
+			return "redirect:/member/signIn";
+		}
 	}
+	
+	@GetMapping(value="/signOut")
+	public String signOut(HttpSession session) {
+		session.invalidate();
+		return "redirect:/member/signIn";
+	}
+	
 	@GetMapping(value = "/signUp")
 	public void signUp() {
 	}
@@ -42,8 +58,8 @@ public class MemberController {
 		return "redirect:/member/signIn";
 	}
 	@GetMapping(value= "/modify")
-	public void modify(Principal principal, Model model) {
-		String userId = principal.getName();
+	public void modify(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
 		MemberVO member = service.readMember(userId);
 		model.addAttribute("member", member);
 	}
@@ -55,11 +71,11 @@ public class MemberController {
 	}
 	
 	@GetMapping(value = "/dashboard")
-	public void dashboard(Model model, Principal principal) {
+	public void dashboard(Model model, HttpSession session) {
 		
 		Date date = new Date();
 		
-		String designer_id = principal.getName();
+		String designer_id = (String)session.getAttribute("userId");
 		
 		List<DateIncomeVO> annualIncome = incomeService.getAnnualIncome(designer_id, date);
 		model.addAttribute("annualIncome", annualIncome);

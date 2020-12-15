@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<sec:authentication var="principal" property="principal" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,7 +97,6 @@
 		<input type="hidden" value="${detail.answerNum }" name="answerNum">
 		<input type="hidden" value="${detail.parentNum }" name="parentNum">
 		<input type="submit">
-		<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }"/>
 	</form>
 </div>
 

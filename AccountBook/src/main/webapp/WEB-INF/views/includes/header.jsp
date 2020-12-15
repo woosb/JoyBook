@@ -20,10 +20,7 @@ CARE &nbsp; LAB
 				<a href="/member/signIn" >SIGN IN</a>
 			</div>
 			<div style="margin-right : 10px;">
-				<form method='post' action="/customLogout" id="logOutForm" >
-					<a href="#"  onclick="signOut()">SIGN OUT</a>
-					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }" />
-				</form>
+				<a href="/member/signOut">SIGN OUT</a>
 			</div>
 			<div style="margin-right : 10px;">
 				<a href="/member/signUp">SIGN UP</a>
@@ -44,8 +41,5 @@ CARE &nbsp; LAB
 </div>
 </body>
 <script>
-	function signOut(){
-		document.getElementById("logOutForm").submit();
-	}
 </script>
 </html>

@@ -6,7 +6,6 @@ import java.util.List;
 import org.junit.Test;	
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,9 +25,7 @@ public class MemberMapperTests {
 	
 	@Setter(onMethod_ = {@Autowired})
 	private MemberService memberService;
-	
-	@Setter(onMethod_ = {@Autowired})
-	private PasswordEncoder pwencoder;
+
 	
 	@Test
 	public void register() throws Exception{
@@ -40,7 +37,7 @@ public class MemberMapperTests {
 		Date updateDate = new Date();
 		
 		member.setUserId(userId);
-		member.setUserPw(pwencoder.encode(userPw));
+		member.setUserPw(userPw);
 		member.setUserName(userName);
 		member.setRegDate(regDate);
 		member.setUpdateDate(updateDate);

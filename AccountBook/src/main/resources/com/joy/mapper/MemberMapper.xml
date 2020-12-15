@@ -42,4 +42,13 @@
 		values
 			(#{userId},"ROLE_MEMBER")
 	</insert>
+	
+	<select id="signIn" resultType="com.joy.domain.MemberVO">
+		select 
+			* 
+		from 
+			member_table 
+		where 
+			userId=#{userId}
+	</select>
 </mapper>

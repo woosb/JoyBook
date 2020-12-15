@@ -6,4 +6,5 @@ public interface MemberMapper {
 	public void signUp(MemberVO member);
 	public MemberVO read(String userId);
 	public void setAuth(MemberVO member);
+	public MemberVO signIn(MemberVO vo);
 }

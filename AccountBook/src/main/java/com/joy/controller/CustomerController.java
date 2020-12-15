@@ -1,6 +1,6 @@
 package com.joy.controller;
 
-import java.security.Principal;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +28,10 @@ public class CustomerController {
 	private CustomerService service;
 	
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model, Principal principal) {
+	public void list(Criteria cri, Model model, HttpSession session) {
 		log.info("list: "+ cri);
 		
-		String userId = principal.getName();
+		String userId = (String)session.getAttribute("userId");
 		cri.setDesigner_id(userId);
 		model.addAttribute("list", service.getAllCustomerWithPaging(cri));
 		
@@ -47,10 +47,10 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/register")
-	public String register(CustomerVO customer, RedirectAttributes rttr, Principal principal) {
+	public String register(CustomerVO customer, RedirectAttributes rttr, HttpSession session) {
 		log.info("=========================");
 		log.info("register: " + customer);
-		String designer_id = principal.getName();
+		String designer_id = (String)session.getAttribute("userId");
 		customer.setDesigner_id(designer_id);
 		service.registerCustomer(customer);
 		return "redirect:/customer/list";

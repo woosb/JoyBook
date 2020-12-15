@@ -1,28 +1,17 @@
 package com.joy.controller;
 
-import java.security.Principal;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.joy.domain.DateIncomeVO;
-import com.joy.domain.MemberVO;
-import com.joy.service.CustomerService;
-import com.joy.service.IncomeService;
-import com.joy.service.MemberService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -41,24 +30,12 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, Principal principal) {
+	public String home(Locale locale, Model model, HttpSession session) {
 		Date date = new Date();
 		SimpleDateFormat spdf1 = new SimpleDateFormat("YYYY MM dd");
 		String formattedDate = spdf1.format(date);
 		model.addAttribute("serverTime", formattedDate );
 				
 		return "/index";
-	}
-	
-	@GetMapping(value="/test")
-	public void test() {
-		
-	}
-	
-	@PostMapping(value="/test")
-	@ResponseBody
-	public MemberVO test(MemberVO vo) {
-		log.info(vo.toString());
-		return vo;
 	}
 }
