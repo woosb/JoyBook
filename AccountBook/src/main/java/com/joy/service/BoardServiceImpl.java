@@ -1,9 +1,16 @@
 package com.joy.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +43,7 @@ public class BoardServiceImpl implements BoardService{
 	public BoardVO selectDetail(int id) {
 		return mapper.selectDetail(id);
 	}
-
+	
 	@Override
 	public void insert(BoardVO vo) {
 		Date regDate = new Date();
@@ -59,11 +66,6 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void updateHit(int id) {
-		mapper.updateHit(id);
-	}
-
-	@Override
 	public void delete(BoardVO vo) {
 		log.info(vo.toString());
 		mapper.delete(vo);
@@ -82,7 +84,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 	
 	@Override
-	public void reply(BoardVO vo) {
+	public int reply(BoardVO vo) {
 		updateAnswerNum(vo.getId());
 		log.info(vo);
 //		int MaxRefOrder = getMaxRefOrder(vo);
@@ -91,7 +93,7 @@ public class BoardServiceImpl implements BoardService{
 		vo.setStep(vo.getStep()+1);
 		vo.setParentNum(vo.getId());
 		vo.setRegDate(new Date());
-		mapper.reply(vo);
+		return mapper.reply(vo);
 	}
 	
 	public void updateAnswerNum(int id) {
@@ -99,7 +101,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<BoardVO> selectReply(int ref) {
+	public List<BoardVO> selectReply(int id) {
+		int ref = mapper.getRef(id);
 		return mapper.selectReply(ref);
 	}
 
@@ -110,8 +113,55 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public void updateRef(BoardVO vo) {
-		log.info(vo.getRef());
-		log.info(vo.getRefOrder());
 		mapper.updateRef(vo);
 	}
+
+//	final int cookieAge = 1*24*60*60;
+	final int cookieAge = 10;
+	@Override
+	public void setHitCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id) throws UnsupportedEncodingException {
+		String userId = (String)session.getAttribute("userId");
+		Cookie viewCookie = null;
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null && cookies.length > 0) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals(URLEncoder.encode("boardId"+id+userId, "UTF-8"))) {
+                    log.info("처음 쿠키가 생성한 뒤 들어옴.");
+					viewCookie = c;
+				}
+			}
+		}
+		
+		if(viewCookie == null) {
+			mapper.updateHit(Integer.parseInt(id));
+			Cookie newCookie = new Cookie(URLEncoder.encode("boardId"+id+userId,"UTF-8"),"hit");
+			newCookie.setMaxAge(cookieAge);
+			newCookie.setPath("/");
+			response.addCookie(newCookie);
+		}
+	}
+
+	@Override
+	public void setRecCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id)
+			throws UnsupportedEncodingException {
+		Cookie viewCookie = null;
+		Cookie[] cookies = request.getCookies();
+		if(cookies != null && cookies.length > 0) {
+			for(Cookie c : cookies) {
+				if(c.getName().equals(URLEncoder.encode("recommend"+id+(String)session.getAttribute("userId"), "UTF-8"))) {
+                    log.info("처음 쿠키가 생성한 뒤 들어옴.");
+					viewCookie = c;
+				}
+			}
+		}
+		
+		if(viewCookie == null) {
+			mapper.recommend(Integer.parseInt(id));
+			Cookie newCookie = new Cookie(URLEncoder.encode("recommend"+id+(String)session.getAttribute("userId"), "UTF-8"),"recommend");
+			newCookie.setMaxAge(cookieAge);
+			newCookie.setPath("/");
+			response.addCookie(newCookie);
+		}
+		log.info("추천버튼 눌림");
+	}	
 }

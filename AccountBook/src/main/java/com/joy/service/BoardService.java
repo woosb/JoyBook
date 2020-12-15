@@ -1,6 +1,11 @@
 package com.joy.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.joy.domain.BoardVO;
 import com.joy.domain.Criteria;
@@ -9,7 +14,6 @@ public interface BoardService {
 	public List<BoardVO> selectList(Criteria cri);
 	public BoardVO selectDetail(int id);
 	public void insert(BoardVO vo);
-	public void updateHit(int id);
 	public void delete(BoardVO vo);
 	public void modify(BoardVO vo);
 	public void recommend(int id);
@@ -19,5 +23,8 @@ public interface BoardService {
 	
 	public List<BoardVO> selectReply(int parentNum);
 	
-	public void reply(BoardVO vo);
+	public int reply(BoardVO vo);
+	
+	public void setHitCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id) throws UnsupportedEncodingException;
+	public void setRecCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id) throws UnsupportedEncodingException;
 }

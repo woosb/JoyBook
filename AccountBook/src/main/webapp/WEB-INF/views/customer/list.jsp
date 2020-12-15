@@ -93,59 +93,19 @@
 <!-- JQUERY CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
+var userId = "<c:out value="${sessionScope.userId}"/>";
+if(userId == ""){
+	alert("로그인이 필요합니다.");
+	self.location= "/member/signIn";
+}
 	$(document).ready(function(){
-		var userId = "<c:out value="${sessionScope.userId}"/>";
-		if(userId == ""){
-			alert("로그인이 필요합니다.");
-			self.location= "/member/signIn";
-		}
-		
-		/* var result = '<c:out value="${result}"/>';
-		
-		checkModal(result);
-		
-		history.replaceState({}, null, null);
-		
-		function checkModal(result){
-			
-			if(result ==='' || history.state){
-				return;
-			}
-			
-			if(parseInt(result) >0){
-				$(".modal-body").html("게시글 " + parseInt(result) + "번이 등록되었습니다.");
-			}
-			
-			$("#myModal").modal("show");
-		} */
 		
 		/*customer 등록*/
 		$("#regBtn").on("click", function(){
 			
 			self.location = "/customer/register";
 		});
-		
-// 		var actionForm = $("#actionForm");
-		
-// 		$(".paginate_button a").on("click", function(e){
 			
-// 			e.preventDefault(); // <a href="${num }">${num }</a> 태그를 클릭해도 이동이 없도록 하는 메소드
-// 			console.log('click');
-			
-// 			// 여기서 this 는 .pagination_button a 이다 이 태그의 href의 속성 value 를  가져와서 input에 값에 추가해 준다.
-// 			actionForm.find("input[name='pageNum']").val($(this).attr("href")); 
-// 			actionForm.submit();
-// 		});
-		
-		/* 게시판 클릭시 세부정보
-		$(".move").on("click", function(e){
-			
-			e.preventDefault();
-			actionForm.append("<input type='hidden' name ='bno' value='"+$(this).attr("href")+"'>");
-			actionForm.attr("action", "/board/get");
-			actionForm.submit();
-		}); */
-		
 	});
 	
 	var searchForm = $("#searchForm");

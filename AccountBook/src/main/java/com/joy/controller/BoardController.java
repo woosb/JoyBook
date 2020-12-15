@@ -17,8 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.multipart.MultipartResolver;
@@ -40,8 +42,6 @@ import lombok.extern.log4j.Log4j;
 @AllArgsConstructor
 public class BoardController {
 	
-//	final int cookieAge = 1*24*60*60;
-	final int cookieAge = 10;
 	
 	@Setter(onMethod_ = @Autowired)
 	BoardService service;
@@ -61,36 +61,18 @@ public class BoardController {
 	@GetMapping("/detail")
 	public String selectDetail(HttpSession session,
 			@RequestParam(value="id") String id ,
-			@RequestParam(value="ref") String ref ,
 			Model model, 
 			HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-		String userId = (String)session.getAttribute("userId");
-		Cookie viewCookie = null;
-		Cookie[] cookies = request.getCookies();
-		if(cookies != null && cookies.length > 0) {
-			for(Cookie c : cookies) {
-				if(c.getName().equals(URLEncoder.encode("boardId"+id+userId, "UTF-8"))) {
-                    log.info("처음 쿠키가 생성한 뒤 들어옴.");
-					viewCookie = c;
-				}
-			}
-		}
 		
-		if(viewCookie == null) {
-			service.updateHit(Integer.parseInt(id));
-			Cookie newCookie = new Cookie(URLEncoder.encode("boardId"+id+userId,"UTF-8"),"hit");
-			newCookie.setMaxAge(cookieAge);
-			newCookie.setPath("/");
-			response.addCookie(newCookie);
-		}
+		service.setHitCookie(request, response, session, id);
 		
-		List<BoardVO> reply = service.selectReply(Integer.parseInt(ref));
+		List<BoardVO> reply = service.selectReply(Integer.parseInt(id));
 		model.addAttribute("reply", reply);
-		
 		
 		BoardVO vo = service.selectDetail(Integer.parseInt(id));
 		model.addAttribute("detail", vo);
+		
 		return "board/detail";
 	}
 	
@@ -130,47 +112,28 @@ public class BoardController {
 	
 	@GetMapping("/recommend")
 	public String recommend(HttpSession session,
-			@RequestParam(value="id") Integer id, 
-			@RequestParam(value="ref") Integer ref, 
+			@RequestParam(value="id") String id, 
 			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		Cookie viewCookie = null;
-		Cookie[] cookies = request.getCookies();
-		if(cookies != null && cookies.length > 0) {
-			for(Cookie c : cookies) {
-				if(c.getName().equals(URLEncoder.encode("recommend"+id+(String)session.getAttribute("userId"), "UTF-8"))) {
-                    log.info("처음 쿠키가 생성한 뒤 들어옴.");
-					viewCookie = c;
-				}
-			}
-		}
-		
-		if(viewCookie == null) {
-			service.recommend(id);
-			Cookie newCookie = new Cookie(URLEncoder.encode("recommend"+id+(String)session.getAttribute("userId"), "UTF-8"),"recommend");
-			newCookie.setMaxAge(cookieAge);
-			newCookie.setPath("/");
-			response.addCookie(newCookie);
-		}
-		log.info("추천버튼 눌림");
-		return "redirect:/board/detail?id="+id+"&ref="+ref;
+		service.setRecCookie(request, response, session, id);
+
+		return "redirect:/board/detail?id="+id;
 	}
 	
 	@PostMapping("/reply")
-	public String reply(HttpSession session, BoardVO vo) {
+	@ResponseBody
+	public void reply(HttpSession session, BoardVO vo) {
 		vo.setUserId( (String)session.getAttribute("userId"));
 		service.reply(vo);
 		log.info(vo);
-		return "redirect:/board/detail?id="+vo.getId()+"&ref="+vo.getRef();
 	}
 	
-	@PostMapping("/rereply")
+	@PostMapping(value="/rereply")
 	public String rereply(HttpSession session, BoardVO vo, @RequestParam("detailId") String detailId) {
 		vo.setUserId((String)session.getAttribute("userId"));
 		vo.setId(vo.getParentNum());
 		log.info(vo);
 		service.reply(vo);
-		log.info("redirect:/board/detail?id="+detailId+"&ref="+vo.getRef());
-		return "redirect:/board/detail?id="+detailId+"&ref="+vo.getRef();
+		return "redirect:/board/detail?id="+detailId;
 	}
 	
 	@GetMapping

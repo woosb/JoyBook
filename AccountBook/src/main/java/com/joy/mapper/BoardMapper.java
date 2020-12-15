@@ -15,7 +15,7 @@ public interface BoardMapper {
 	public void delete(BoardVO vo);
 	public void modify(BoardVO vo);
 	public void recommend(int id);
-	public void reply(BoardVO vo);
+	public int reply(BoardVO vo);
 	public List<BoardVO> selectReply(int ref);
 	public Integer getTotal();
 	
@@ -25,5 +25,7 @@ public interface BoardMapper {
 //	public BoardVO getParentInfo(int id);
 //	public Integer getRefOrder(BoardVO vo);
 	public void updateAnswerNum(int id);
+	
+	public Integer getRef(int id);
 	
 }

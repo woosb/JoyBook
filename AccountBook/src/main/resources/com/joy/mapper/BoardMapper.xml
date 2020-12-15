@@ -113,6 +113,8 @@
 			board
 		where
 			ref = #{ref}
+		and 
+			step > 0
 		order by
 			refOrder
 	</select>
@@ -135,4 +137,12 @@
 		and 
 			refOrder > #{refOrder};		
 	</update>
+	
+	<select id="getRef" resultType="Integer">
+		select 
+			ref 
+		from 
+			board 
+		where id=#{id}
+	</select>
 </mapper>

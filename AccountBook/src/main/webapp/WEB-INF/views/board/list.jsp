@@ -29,7 +29,7 @@
 	<c:forEach var="list" items="${list }">
 		<tr>
 			<td><c:out value="${list.id }"/></td>
-			<td><a href="/board/detail?id=${list.id }&ref=${list.ref }"><c:out value="${list.title }"/></a></td>
+			<td><a href="/board/detail?id=${list.id }"><c:out value="${list.title }"/></a></td>
 			<td><c:out value="${list.userId }"/></td>
 			<td><c:out value="${list.regDate }"/></td>
 			<td><c:out value="${list.hit }"/></td>
