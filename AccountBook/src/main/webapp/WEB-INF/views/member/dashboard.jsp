@@ -45,5 +45,12 @@
 	</table>
 </div>
 <%@ include file="../includes/footer.jsp" %>
+<script>
+var userId = "<c:out value="${sessionScope.userId}"/>";
+if(userId == ""){
+	alert("로그인이 필요합니다.");
+	self.location= "/member/signIn";
+}
+</script>
 </body>
 </html>

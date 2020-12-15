@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix ="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,15 +17,21 @@ CARE &nbsp; LAB
 			<a href="/">HOME</a>
 		</div>	
 		<div style="float:right; display: flex;">
-			<div style="margin-right : 10px;">
-				<a href="/member/signIn" >SIGN IN</a>
-			</div>
-			<div style="margin-right : 10px;">
-				<a href="/member/signOut">SIGN OUT</a>
-			</div>
-			<div style="margin-right : 10px;">
-				<a href="/member/signUp">SIGN UP</a>
-			</div>
+		<c:choose>
+			<c:when test="${sessionScope.userId eq null }">
+				<div style="margin-right : 10px;">
+					<a href="/member/signIn" >SIGN IN</a>
+				</div>
+				<div style="margin-right : 10px;">
+					<a href="/member/signUp">SIGN UP</a>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div style="margin-right : 10px;">
+					<a href="/member/signOut">SIGN OUT</a>
+				</div>
+			</c:otherwise>
+		</c:choose>
 		</div>
 		<div style="display:flex;">
 			<div style="margin-right : 10px;">

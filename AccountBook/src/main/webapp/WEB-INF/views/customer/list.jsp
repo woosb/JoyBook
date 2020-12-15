@@ -94,6 +94,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		var userId = "<c:out value="${sessionScope.userId}"/>";
+		if(userId == ""){
+			alert("로그인이 필요합니다.");
+			self.location= "/member/signIn";
+		}
 		
 		/* var result = '<c:out value="${result}"/>';
 		

@@ -28,9 +28,14 @@
 		</tr>
 	</table>
 	<input type="submit" id="uploadBtn" value="제출하기">
-	<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }"/>
 </form>
-	
+<script>
+	var userId = "<c:out value="${sessionScope.userId}"/>";
+	if(userId == ""){
+		alert("로그인이 필요합니다.");
+		self.location= "/member/signIn";
+	}
+</script>
 </div>
 <%@ include file="../includes/footer.jsp" %>
 </body>

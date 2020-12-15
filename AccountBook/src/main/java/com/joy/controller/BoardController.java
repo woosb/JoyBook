@@ -178,5 +178,4 @@ public class BoardController {
 		model.addAttribute("vo", vo);
 		model.addAttribute("detailId", detailId);
 	}
-	
 }
