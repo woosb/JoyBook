@@ -10,7 +10,7 @@
 </head>
 <body>
 <%@ include file="../includes/header.jsp" %>
-<div align="center">
+<div class="container">
 <h1>글 쓰 기 </h1>
 <form action="/board/insert" method="post" enctype="multipart/form-data">
 	<table border="1">
@@ -20,7 +20,7 @@
 		</tr>
 		<tr>
 			<th>내용</th>
-			<td><textarea rows="10" name="content"></textarea></td>
+			<td><textarea rows="10" name="content" class="summernote"></textarea></td>
 		</tr>
 		<tr>
 			<th>파일첨부</th>
@@ -35,6 +35,13 @@
 		alert("로그인이 필요합니다.");
 		self.location= "/member/signIn";
 	}
+</script>
+<script>
+      $('.summernote').summernote({
+        placeholder: 'Hello Bootstrap 4',
+        tabsize: 2,
+        height: 100
+      });
 </script>
 </div>
 <%@ include file="../includes/footer.jsp" %>

@@ -4,60 +4,76 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>SB Admin 2 - Login</title>
-</head>
-<body>
-<%@ include file="../includes/header.jsp" %>
-	<div align="center">
-		<h1>로그인</h1>
-		<form method='post' action="/member/signIn">
-			<table border="1">
-				<tr>
-					<td>아이디</td>
-					<td><input type="email" name="userId"  id="mb_id"  placeholder="Enter Email Address..."></td>
-				</tr>
-				<tr>
-					<td>비밀번호</td>
-					<td><input type="password" name="userPw" id="mb_pw" placeholder="Password"></td>
-				</tr>
-				<tr>
-					<td>자동로그인</td>
-					<td><input type="checkbox"  id="customCheck" name="remember-me"></td>
-				</tr>
-				<tr>
-					<td colspan="2"><c:out value= "${loginFailMsg}"/></td>
-			    </tr>
-				<tr>
-			    	<td colspan="2">
-			    		<input type="submit"  id="signIn"  value='Login'/>
-			    		<a href="/member/signUp">회원가입</a>
-			    	</td>
-			    </tr>
-			</table>
-		</form>
-	</div>
-<%@ include file="../includes/footer.jsp" %>
-</body>
-	<!-- JQUERY CDN -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$("#signIn").on("click", function(){
-				const mb_id = document.getElementById('mb_id').value;
-				const mb_pw = document.getElementById('mb_pw').value;
-				if(!mb_id){
-					alert("아이디를 입력하세요!");
-					return false;
-				}else if(!mb_pw){
-					alert("비밀번호를 입력하세요!");
-					return false;
-				}
-			});
-			$("#reset").on("click", function(){
-				history.back();
-			});
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Signin Template · Bootstrap</title>
 
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+<link href="/resources/bootstrap/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="/resources/bootstrap/signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+<form class="form-signin" method='post' action="/member/signIn">
+  <img class="mb-4" src="/resources/images/main.png" alt="" width="72" height="72">
+  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+  <label for="inputEmail" class="sr-only">Email address</label>
+  <input type="email" id="inputEmail" name="userId" class="form-control" placeholder="Email address" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" name="userPw" class="form-control" placeholder="Password" required>
+  <div class="checkbox mb-3">
+  <label>
+    <input type="checkbox" id="customCheck" name="remember-me" value="remember-me"> Remember me
+  </label>
+  </div>
+  <input class="btn btn-lg btn-primary btn-block" type="submit" id="signIn" value="Sign in">
+  <a href="/member/signUp" class="btn btn-lg btn-primary btn-block">Sign up</a>
+  <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+</form>
+</body>
+</html>
+<!-- JQUERY CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#signIn").on("click", function(){
+			const inputEmail = document.getElementById('inputEmail').value;
+			const inputPassword = document.getElementById('inputPassword').value;
+			if(!inputEmail){
+				alert("아이디를 입력하세요!");
+				return false;
+			}else if(!inputPassword){
+				alert("비밀번호를 입력하세요!");
+				return false;
+			}
 		});
-	</script>
+		$("#reset").on("click", function(){
+			history.back();
+		});
+
+	});
+</script>
 </html>

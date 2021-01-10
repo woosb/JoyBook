@@ -10,7 +10,7 @@
 </head>
 <body>
 <%@ include file="../includes/header.jsp" %>
-<div align="center">
+<div class="container">
 	<h1>글 내용</h1>
 	<table border="1">
 		<tr>

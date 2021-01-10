@@ -20,7 +20,7 @@ var replyService = (function(){
 					error(er);
 				}
 			}
-		})
+		});
 	}
 	
 	function getList(param, callback, error){

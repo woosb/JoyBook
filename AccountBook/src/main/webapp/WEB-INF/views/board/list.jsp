@@ -10,9 +10,9 @@
 </head>
 <body>
 <%@ include file="../includes/header.jsp" %>
-<div align="center">
+<div class="container">
 <h1>게 시 판</h1>
-<table border="1">
+<table class="table">
 	<tr>
 		<th>번호</th>	
 		<th>제목</th>	
@@ -61,7 +61,7 @@
 	<input type="hidden" name="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'>
 </form>
 <br>
-<input style="float:right;" type="button" value="글쓰기" onclick="self.location='/board/insert'">
+<input class="btn btn-default" type="button" value="글쓰기" onclick="self.location='/board/insert'">
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -37,6 +37,7 @@ public class CustomerController {
 		
 		int total = service.getTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		model.addAttribute("pageName", "CustomerList");	
 
 		log.info("total: " + total);
 	}

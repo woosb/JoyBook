@@ -35,7 +35,7 @@ public class HomeController {
 		SimpleDateFormat spdf1 = new SimpleDateFormat("YYYY MM dd");
 		String formattedDate = spdf1.format(date);
 		model.addAttribute("serverTime", formattedDate );
-				
+		model.addAttribute("pageName", "home");	
 		return "/index";
 	}
 }

@@ -28,7 +28,9 @@ public class MemberController {
 	private IncomeService incomeService;
 	
 	@GetMapping(value = "/signIn")
-	public void login() {
+	public void login(Model model) {
+		model.addAttribute("pageName", "SIGNIN");	
+
 	}
 	
 	@PostMapping(value = "/signIn")
@@ -43,13 +45,15 @@ public class MemberController {
 	}
 	
 	@GetMapping(value="/signOut")
-	public String signOut(HttpSession session) {
+	public String signOut(HttpSession session, Model model) {
+		model.addAttribute("pageName", "SIGNOUT");	
 		session.invalidate();
 		return "redirect:/member/signIn";
 	}
 	
 	@GetMapping(value = "/signUp")
-	public void signUp() {
+	public void signUp(Model model) {
+		model.addAttribute("pageName", "SIGNUP");	
 	}
 	@PostMapping(value = "/signUp")
 	public String signUp(MemberVO member) {
@@ -72,7 +76,8 @@ public class MemberController {
 	
 	@GetMapping(value = "/dashboard")
 	public void dashboard(Model model, HttpSession session) {
-		
+		model.addAttribute("pageName", "Dashboard");	
+
 		Date date = new Date();
 		
 		String designer_id = (String)session.getAttribute("userId");

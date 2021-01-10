@@ -48,6 +48,7 @@ public class BoardController {
 	
 	@GetMapping("/list")
 	public void boardList(Model model, Criteria cri) {
+		model.addAttribute("pageName", "boardList");	
 		log.info("list: "+ cri);
 
 		int total = service.getTotal();
