@@ -10,7 +10,7 @@
 </head>
 <body>
 <%@ include file="../includes/header.jsp" %>
-<div class="container">
+<main role="main" class="container">
 <h1>글 쓰 기 </h1>
 <form action="/board/insert" method="post">
 	<table border="1">
@@ -27,7 +27,7 @@
 	<input type="submit" id="uploadBtn" value="제출하기">
 	
 </form>
-<img src="/download?imageFileName=test3.jpg" width="100px">
+<img src="/download?imageFileName=ㅎ로.gif" width="100px">
 	<span>파일첨부</span>
 	<input type="file" name="uploadFile" multiple>
 	<button id="uploadBtn" onclick="uploadFile();">Upload</button>
