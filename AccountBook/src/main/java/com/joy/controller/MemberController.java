@@ -25,12 +25,10 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping(value="/member")
 public class MemberController {
 	private MemberService service;
-	private IncomeService incomeService;
 	
 	@GetMapping(value = "/signIn")
 	public void login(Model model) {
 		model.addAttribute("pageName", "SIGNIN");	
-
 	}
 	
 	@PostMapping(value = "/signIn")
@@ -72,30 +70,5 @@ public class MemberController {
 		log.info(member);
 		service.modifyMember(member);
 		return "redirect:/customer/list";
-	}
-	
-	@GetMapping(value = "/dashboard")
-	public void dashboard(Model model, HttpSession session) {
-		model.addAttribute("pageName", "Dashboard");	
-
-		Date date = new Date();
-		
-		String designer_id = (String)session.getAttribute("userId");
-		
-		List<DateIncomeVO> annualIncome = incomeService.getAnnualIncome(designer_id, date);
-		model.addAttribute("annualIncome", annualIncome);
-		
-		List<DateIncomeVO> AnnualIncomeList = incomeService.getAnnualIncomeList(designer_id, date);
-		model.addAttribute("AnnualIncomeList", AnnualIncomeList);
-		
-		List<DateIncomeVO> MonthIncome = incomeService.getMonthIncome(designer_id, date);
-		model.addAttribute("MonthIncome", MonthIncome);
-		
-		List<DateIncomeVO> MonthlyIncomeList = incomeService.getMonthlyIncomeList(designer_id, date);
-		model.addAttribute("MonthlyIncomeList", MonthlyIncomeList);
-		
-		List<DateIncomeVO> IncomeByReservationRoute = incomeService.getIncomeByReservationRoute(designer_id, date);
-		model.addAttribute("IncomeByReservationRoute", IncomeByReservationRoute);
-		
 	}
 }

@@ -110,7 +110,6 @@
 				replyUL.html(str);
 			});
 		}
-		
 	});
 </script>
 </body>

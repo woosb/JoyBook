@@ -3,6 +3,7 @@ package com.joy.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -27,6 +28,7 @@ import org.springframework.web.multipart.MultipartResolver;
 
 import com.joy.domain.BoardVO;
 import com.joy.domain.Criteria;
+import com.joy.domain.DateIncomeVO;
 import com.joy.domain.PageDTO;
 import com.joy.service.BoardService;
 import com.joy.service.IncomeService;
@@ -46,6 +48,9 @@ public class BoardController {
 	@Setter(onMethod_ = @Autowired)
 	BoardService service;
 	
+	@Autowired
+	IncomeService incomeService;
+
 	@GetMapping("/list")
 	public void boardList(Model model, Criteria cri) {
 		model.addAttribute("pageName", "boardList");	
@@ -141,5 +146,30 @@ public class BoardController {
 	public void rereply(BoardVO vo, Model model, @RequestParam("detailId") String detailId ) {
 		model.addAttribute("vo", vo);
 		model.addAttribute("detailId", detailId);
+	}
+	
+	@GetMapping(value = "/dashboard")
+	public void dashboard(Model model, HttpSession session) {
+		model.addAttribute("pageName", "Dashboard");	
+
+		Date date = new Date();
+		
+		String designer_id = (String)session.getAttribute("userId");
+		
+		List<DateIncomeVO> annualIncome = incomeService.getAnnualIncome(designer_id, date);
+		model.addAttribute("annualIncome", annualIncome);
+		
+		List<DateIncomeVO> AnnualIncomeList = incomeService.getAnnualIncomeList(designer_id, date);
+		model.addAttribute("AnnualIncomeList", AnnualIncomeList);
+		
+		List<DateIncomeVO> MonthIncome = incomeService.getMonthIncome(designer_id, date);
+		model.addAttribute("MonthIncome", MonthIncome);
+		
+		List<DateIncomeVO> MonthlyIncomeList = incomeService.getMonthlyIncomeList(designer_id, date);
+		model.addAttribute("MonthlyIncomeList", MonthlyIncomeList);
+		
+		List<DateIncomeVO> IncomeByReservationRoute = incomeService.getIncomeByReservationRoute(designer_id, date);
+		model.addAttribute("IncomeByReservationRoute", IncomeByReservationRoute);
+		
 	}
 }

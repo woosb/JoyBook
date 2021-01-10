@@ -18,5 +18,4 @@
        <property name="defaultEncoding" value="UTF-8" />
     </bean>
 	<import resource="dbData.xml" />
-		
 </beans>

@@ -12,7 +12,7 @@
 <%@ include file="../includes/header.jsp" %>
 <div class="container">
 <h1>글 쓰 기 </h1>
-<form action="/board/insert" method="post" enctype="multipart/form-data">
+<form action="/board/insert" method="post">
 	<table border="1">
 		<tr>
 			<th>제목</th>
@@ -22,28 +22,46 @@
 			<th>내용</th>
 			<td><textarea rows="10" name="content" class="summernote"></textarea></td>
 		</tr>
-		<tr>
-			<th>파일첨부</th>
-			<td><input type="file" name="uploadFile" multiple></td>
-		</tr>
 	</table>
+	
 	<input type="submit" id="uploadBtn" value="제출하기">
+	
 </form>
-<script>
-	var userId = "<c:out value="${sessionScope.userId}"/>";
-	if(userId == ""){
-		alert("로그인이 필요합니다.");
-		self.location= "/member/signIn";
-	}
-</script>
-<script>
-      $('.summernote').summernote({
-        placeholder: 'Hello Bootstrap 4',
-        tabsize: 2,
-        height: 100
-      });
-</script>
+<img src="/download?imageFileName=test3.jpg" width="100px">
+	<span>파일첨부</span>
+	<input type="file" name="uploadFile" multiple>
+	<button id="uploadBtn" onclick="uploadFile();">Upload</button>
 </div>
 <%@ include file="../includes/footer.jsp" %>
+<script>
+function uploadFile(){
+	var formData = new FormData();
+	var inputFile = $("input[name='uploadFile']");
+	
+	var files = inputFile[0].files;
+	
+	console.log(files);
+	
+	for(var i = 0; i <files.length; i++){
+		formData.append("uploadFile", files[i]);
+	}
+	
+	$.ajax({
+		url: '/uploadAjax',
+		processData: false,
+		contentType: false,
+		data: formData,
+		type:'post',
+		success: function(result){
+			alert(result);
+		}
+	});
+}
+</script>
+<script>
+$(document).ready(function(){
+	
+});
+</script>
 </body>
 </html>
