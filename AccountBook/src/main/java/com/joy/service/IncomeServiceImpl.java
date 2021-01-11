@@ -32,6 +32,20 @@ public class IncomeServiceImpl implements IncomeService{
 		List<DateIncomeVO> list = mapper.getMonthlyIncomeList(designer_id, m_date);
 		return list;
 	}
+	@Override
+	public List<DateIncomeVO> getNewCus(String designer_id, Date date) {
+		SimpleDateFormat sdfm = new SimpleDateFormat("yyyy");
+		String m_date = sdfm.format(date);
+		List<DateIncomeVO> list = mapper.getNewCus(designer_id, m_date);
+		return list;
+	}
+	@Override
+	public List<DateIncomeVO> getOldCus(String designer_id, Date date) {
+		SimpleDateFormat sdfm = new SimpleDateFormat("yyyy");
+		String m_date = sdfm.format(date);
+		List<DateIncomeVO> list = mapper.getOldCus(designer_id, m_date);
+		return list;
+	}
 
 	@Override
 	public List<DateIncomeVO> getAnnualIncomeList(String designer_id, Date date) {

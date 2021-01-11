@@ -41,7 +41,7 @@ public class FileController {
 		try {
 			in = new FileInputStream(file);
 		}catch(IOException e) {
-			in = new FileInputStream("C:\\imgTest\\default\\default.jpg" );
+			in = new FileInputStream("C:\\imgTest\\default\\default.png" );
 			e.printStackTrace();
 		}
 		byte[] buffer = new byte[1024*1024*10];

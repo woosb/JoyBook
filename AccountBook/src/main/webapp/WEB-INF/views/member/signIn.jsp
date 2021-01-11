@@ -14,7 +14,7 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
     <!-- Bootstrap core CSS -->
-	<link href="/resources/bootstrap/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;

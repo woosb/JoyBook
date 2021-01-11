@@ -4,7 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp" %>
 <main role="main">
-	<div class="container">
+	<div class="container" style="margin:20px 0;">
+		<h1> 고객 매출 통계</h1>
 		<div class="row my-2">
 			<div class="col-md-6 py-1">
 	            <div class="card">
@@ -63,19 +64,32 @@
 /* bar chart */
 var colors = ['#007bff', '#28a745', '#333333', '#c3e6cb', '#dc3545', '#6c757d'];
 var chBar = document.getElementById("chBar");
+
+var getNewCus = [];
+var getOldCus = [];
+
+<c:forEach items="${getNewCus }"  var="income">
+	getNewCus.push(<c:out value="${ income.income}"/>);
+</c:forEach>
+<c:forEach items="${getOldCus }"  var="income">
+	getOldCus.push(<c:out value="${ income.income}"/>);
+</c:forEach>
+
 if (chBar) {
   new Chart(chBar, {
   type: 'bar',
   data: {
-    labels: ["S", "M", "T", "W", "T", "F", "S"],
-    datasets: [{
-      data: [589, 445, 483, 503, 689, 692, 634],
+    labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+    datasets: [
+    {
+      data: getNewCus,
       backgroundColor: colors[0]
     },
     {
-      data: [639, 465, 493, 478, 589, 632, 674],
+      data: getOldCus,
       backgroundColor: colors[1]
-    }]
+    }
+    ]
   },
   options: {
     legend: {
@@ -93,23 +107,31 @@ if (chBar) {
 </script>
 <script>
 /* large line chart */
+
+	var income = [];
+	<c:forEach items="${MonthlyIncomeList }"  var="income">
+		income.push(<c:out value="${ income.income}"/>);
+	</c:forEach>
+	console.log(income);
+	
 var chLine = document.getElementById("chLine");
 var chartData = {
-    labels: ["S", "M", "T", "W", "T", "F", "S"],
+	labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
     datasets: [{
-            data: [589, 445, 483, 503, 689, 692, 634],
-            backgroundColor: 'transparent',
+            data: income,
+            backgroundColor: colors[3],
+//          backgroundColor: 'transparent',
             borderColor: colors[0],
             borderWidth: 4,
             pointBackgroundColor: colors[0]
         },
-          {
-            data: [639, 465, 493, 478, 589, 632, 674],
-            backgroundColor: colors[3],
-            borderColor: colors[1],
-            borderWidth: 4,
-            pointBackgroundColor: colors[1]
-          }
+//           {
+//             data: income,
+//             backgroundColor: colors[3],
+//             borderColor: colors[1],
+//             borderWidth: 4,
+//             pointBackgroundColor: colors[1]
+//           }
     ]
 };
 if (chLine) {

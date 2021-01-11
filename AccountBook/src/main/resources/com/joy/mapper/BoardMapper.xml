@@ -99,7 +99,7 @@
 			values(
 				#{userId}, 
 				#{content}, 
-				#{regDate},
+				now(),
 				#{updateDate}, 
 				#{recommend}, 
 				#{ref},

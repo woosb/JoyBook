@@ -92,6 +92,7 @@ public class BoardServiceImpl implements BoardService{
 		log.info(vo);
 //		int MaxRefOrder = getMaxRefOrder(vo);
 		updateRef(vo);
+		vo.setRef(getRef(vo.getId()));
 		vo.setRefOrder(vo.getRefOrder()+1);
 		vo.setStep(vo.getStep()+1);
 		vo.setParentNum(vo.getId());

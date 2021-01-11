@@ -19,6 +19,40 @@
 		order by
 			date_format(date,'%Y %m');
 	</select>
+	<select id="getNewCus"  resultType="com.joy.domain.DateIncomeVO">
+		select 
+        	date_format(date, '%Y %m') as date, 
+			sum(price) as income 
+		from
+			customer_table
+		where
+			date_format(date, '%Y') = #{date}
+		and 
+			designer_id = #{designer_id}
+		and
+			visitType = '신규'
+		group by 
+			date_format(date,'%Y %m')
+		order by
+			date_format(date,'%Y %m');
+	</select>
+	<select id="getOldCus"  resultType="com.joy.domain.DateIncomeVO">
+		select 
+        	date_format(date, '%Y %m') as date, 
+			sum(price) as income 
+		from
+			customer_table
+		where
+			date_format(date, '%Y') = #{date}
+		and 
+			designer_id = #{designer_id}
+		and
+			visitType = '재방문'
+		group by 
+			date_format(date,'%Y %m')
+		order by
+			date_format(date,'%Y %m');
+	</select>
 	
 	<select id="getAnnualIncomeList" resultType="com.joy.domain.DateIncomeVO">
 		select

@@ -5,22 +5,25 @@
 <%@ include file="../includes/header.jsp" %>
 <main role="main">
 <div class="container" style="margin: 20px 0px;">
-<h1>게 시 판</h1>
-<input class="btn btn-default" type="button" value="글쓰기" onclick="self.location='/board/insert'">
+<h1>Styles</h1>
+		<input class="btn btn-secondary" type="button" value="Add More" onclick="self.location='/board/insert'">
+<hr>
 	<div class="row" id="contents">
         
     </div>  
 <div>
-	<c:if test="${pageMaker.prev}">
-		<li class="paginate_button"><a href="${pageMaker.startPage -1 }">Previous</a></li>
-	</c:if>
-	<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
-<%-- 		<li class="paginate_button"><a href="${num }" >${num }</a></li> --%>
-		<a href="/board/list?pageNum=${num }"><c:out value="${num }"/></a>
-	</c:forEach>
-	<c:if test="${pageMaker.next }">
-		<li class="paginate_button"><a href="${pageMaker.endPage + 1 }">Next</a></li>
-	</c:if>
+	<ul class="pagination justify-content-center">
+		<c:if test="${pageMaker.prev}">
+			<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1 }">Previous</a></li>
+		</c:if>
+		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
+	<%-- 		<li class="paginate_button"><a href="${num }" >${num }</a></li> --%>
+			<li class="page-item"><a class="page-link" href="/board/list?pageNum=${num }"><c:out value="${num }"/></a><li>
+		</c:forEach>
+		<c:if test="${pageMaker.next }">
+			<li class="page-item"><a class="page-link" href="${pageMaker.endPage + 1 }">Next</a></li>
+		</c:if>
+	</ul>
 </div>
 <form id="actionForm" action="/board/list" method="get">
 	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
@@ -36,7 +39,7 @@
 getContents();
 function getContents(){
 	$.ajax({
-		url:"/board/contents",
+		url:"/board/contents/"+"${pageMaker.cri.pageNum }",
 		contentType:"JSON"		
 	}).done(function(result){
 		console.log(result);
@@ -47,7 +50,7 @@ function getContents(){
 			card.setAttribute("class", "col-md-4");
 			str += '<div class="card mb-4 shadow-sm">';
 			if(result[i].thumbnail == ""){
-				str += '<img src="/download/default/default.jpg" width="100%" height="100%"/>';
+				str += '<img src="/download/default/default.png" width="100%" height="100%"/>';
 			}else{
 				str += '<img src="'+ result[i].thumbnail+'" width="100%" height="100%"/>';
 			}

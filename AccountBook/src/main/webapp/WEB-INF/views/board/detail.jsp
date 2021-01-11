@@ -8,18 +8,43 @@
 		<div id="detail">
 			
 		</div>
-		<div id="detail2">
-			
+		<div class="col-md-12" style="margin:0 auto;">
+			<div class="card mb-4 shadow-sm">
+				<div class="card-body">
+					댓글 : <input type="text" style="width:400px;" name="content" id="content">
+					<input type="button" id="replyBtn" onclick="reply();" value="reply">
+					<input type="hidden" id="id" name="id" value="${id }">
+					<br><hr>
+					<div class="col-md-12" style="margin:0 auto;">
+						<div class="card mb-4 shadow-sm">
+							<div class="card-body" id="detail2" style="text-align:left; padding:20px;">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<button onclick="self.location='/board/list'">뒤로가기</button>
-		<form id="replyForm">
-			댓글달기 : <input type="text" name="content" id="replyContent">
-			<input type="button" id="replyBtn" value="댓글작성">
-		</form>
+		<button class="btn btn-dark" onclick="self.location='/board/list'">뒤로가기</button>
 	</div>
 </main>
 <%@ include file="../includes/commonscript.jsp" %>
 <script>
+function reply(){
+	var content = document.getElementById("content").value;	
+	var vo = {"content" :content, "id" : "${id }"};
+	console.log(vo);
+	$.ajax({
+		url:"/board/reply",
+		type:"post",
+		data:JSON.stringify(vo),
+		dataType:"json",
+		contentType:"application/json; charset=utf-8"
+	}).done(function(result){
+		$("#content").val("");
+		reset();
+	});
+}
+
 reset();
 function reset(){
 	$.ajax({
@@ -29,14 +54,14 @@ function reset(){
 // 		var card = document.createElement("div");
 // 		card.setAttribute("class", "col-md-12");
 		var str = "";
-		str += "<div class='col-md-12'style='margin:0 auto;'>"
+		str += '<div class="col-md-12" style="margin:0 auto;">'
 		str += '<div class="card mb-4 shadow-sm">';
 		if(result.thumbnail == ""){
 			str += '<img src="/download/default/default.jpg" width="90%" height="90%" style="margin:0 auto;"/>';
 		}else{
 			str += '<img src="'+ result.thumbnail+'" width="90%" height="90%" style="margin:0 auto;"/>';
 		}
-		str += ' <div class="card-body">';
+		str += '<div class="card-body">';
 		str += '<p class="card-text">'+result.cardText + '<br><hr>'
 		str += '<h1>'+result.title+'</h1><hr>'+ result.content
 		str += '<br><small class="text-muted"> 조회수 '+ result.hit + '&nbsp;';
@@ -64,11 +89,15 @@ function reset(){
 		url:"/board/reply/"+'${id}'
 	}).done(function(result){
 		var detail2 = document.getElementById("detail2");
-// 		var card = document.createElement("div");
 		var str = "";
-		str += "댓글";
-// 		card.innerHTML = str;		
-// 		detail2.appendChild(card);
+		for(var i = 0; i < result.length; i ++){
+			str += '<div style="margin:10px 0;">'
+			str += '<span>'+result[i].userId+'</span>'
+			str += '&nbsp;&nbsp;<span>'+result[i].content+'</span>'
+			str += '<button style="float:right; margin: 0 5px;">x</button>'
+			str += '<span style="float:right;">'+displayTime(result[i].regDate)+'</span>'
+			str += '</div>'
+		}
 		detail2.innerHTML = str;
 		console.log(result);	
 	});

@@ -64,13 +64,18 @@ public class BoardController {
 		log.info("total: " + total);
 	}
 	
+	@GetMapping(value= "/contents/{pageNum}", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<BoardVO> getList(@PathVariable("pageNum") Integer pageNum, Criteria cri) {
+		cri.setPageNum(pageNum);
+		List<BoardVO> list = service.selectList(cri);
+		return list;
+	}
+	
 	@GetMapping(value= "/contents", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public List<BoardVO> getList(Criteria cri) {
 		List<BoardVO> list = service.selectList(cri);
-		for(BoardVO vo : list) {
-			log.info(vo.toString());
-		}
 		return list;
 	}
 	
@@ -97,6 +102,14 @@ public class BoardController {
 	public List<BoardVO> getReply(@PathVariable("id") String id){
 		List<BoardVO> reply = service.selectReply(Integer.parseInt(id));
 		return reply;
+	}
+	
+	@PostMapping(value="/reply")
+	@ResponseBody
+	public int updateReply(@RequestBody BoardVO vo, HttpSession session) {
+		vo.setUserId((String)session.getAttribute("userId"));
+		log.info(vo.toString());
+		return service.reply(vo);
 	}
 	
 	@GetMapping("/insert")
@@ -138,14 +151,6 @@ public class BoardController {
 		service.setRecCookie(request, response, session, id);
 	}
 	
-	@PostMapping("/reply")
-	@ResponseBody
-	public void reply(HttpSession session, BoardVO vo) {
-		vo.setUserId( (String)session.getAttribute("userId"));
-		service.reply(vo);
-		log.info(vo);
-	}
-	
 	@PostMapping(value="/rereply")
 	public String rereply(HttpSession session, BoardVO vo, @RequestParam("detailId") String detailId) {
 		vo.setUserId((String)session.getAttribute("userId"));
@@ -180,6 +185,12 @@ public class BoardController {
 		
 		List<DateIncomeVO> MonthlyIncomeList = incomeService.getMonthlyIncomeList(designer_id, date);
 		model.addAttribute("MonthlyIncomeList", MonthlyIncomeList);
+		
+		List<DateIncomeVO> getNewCus = incomeService.getNewCus(designer_id, date);
+		model.addAttribute("getNewCus", getNewCus);
+		
+		List<DateIncomeVO> getOldCus = incomeService.getOldCus(designer_id, date);
+		model.addAttribute("getOldCus", getOldCus);
 		
 		List<DateIncomeVO> IncomeByReservationRoute = incomeService.getIncomeByReservationRoute(designer_id, date);
 		model.addAttribute("IncomeByReservationRoute", IncomeByReservationRoute);
