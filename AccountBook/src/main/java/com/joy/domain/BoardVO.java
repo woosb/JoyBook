@@ -9,6 +9,7 @@ public class BoardVO {
 	private int id;
 	private String userId;
 	private String title;
+	private String thumbnail;
 	private String content;
 	private Date regDate;
 	private Date updateDate;

@@ -28,9 +28,9 @@
 	<insert id="insert">
 		insert into 
 		board
-			(userId, title, content, regDate, ref)
+			(userId, title, thumbnail, content, regDate, ref)
 		values
-			(#{userId}, #{title}, #{content}, #{regDate}, #{ref})
+			(#{userId}, #{title}, #{thumbnail}, #{content}, #{regDate}, #{ref})
 	</insert>
 	
 	<update id="updateHit">

@@ -6,26 +6,23 @@
 <main role="main">
 	<div class="container">
 	<br>
-		<h1>게시글 작성 하기</h1>
-		<form method="post">
-			<input type="text" name="title">
-			<textarea id="summernote" name="editordata"></textarea>
-		</form>
-		<button onclick="test();">테스트</button>
+		<h1>스타일 등록하기</h1>
+		<form action="/board/insert" method="post">
+			<input type="text" name="title" class="form-control" placeholder="title" style="margin : 10px 0px; ">
+			<div id="contents">
+				<textarea class="summernote" id="summernote" name="content"></textarea>
+			</div>
+			<div style="margin:20px 0px;" align="center"><input type="submit" class="btn btn-secondary btn-lg btn-primary" value="제출하기"></div>
+		</form>		
 	</div>
 </main>
 <%@ include file="../includes/commonscript.jsp" %>
 <script>
-	function test(){
-		var markupStr = $('#summernote').summernote('code');
-		console.log(markupStr);
-	}
-	
 	$(function(){
-		$('#summernote').summernote({
-			placeholder: 'Hello Bootstrap 4',
+		$('.summernote').summernote({
+			placeholder: '내용 입력!',
 	        tabsize: 2,
-	        height: 500,
+	        height: 250,
 	        minHeight : null,
 	        maxHeight : null,
 	        focus : true,
@@ -56,6 +53,5 @@
 	      	});
 	    }
 	});
-	
 </script>
 <%@ include file="../includes/footer.jsp" %>

@@ -55,13 +55,16 @@ public class BoardController {
 	public void boardList(Model model, Criteria cri) {
 		model.addAttribute("pageName", "boardList");	
 		log.info("list: "+ cri);
-
 		int total = service.getTotal();
-
 		model.addAttribute("list", service.selectList(cri));
-		
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		log.info("total: " + total);
+	}
+	
+	@GetMapping("/contents")
+	@ResponseBody
+	public void getList() {
+		
 	}
 	
 	@GetMapping("/detail")
@@ -89,7 +92,6 @@ public class BoardController {
 	
 	@PostMapping("/insert")
 	public String insert(HttpSession session, BoardVO vo) {
-		
 		String userId = (String)session.getAttribute("userId");
 		vo.setUserId(userId);
 		service.insert(vo);
