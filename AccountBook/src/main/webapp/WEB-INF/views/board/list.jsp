@@ -2,13 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
 <div class="container">
 <h1>게 시 판</h1>
@@ -64,9 +57,8 @@
 <input class="btn btn-default" type="button" value="글쓰기" onclick="self.location='/board/insert'">
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<%@ include file="../includes/commonscript.jsp" %>
 <script>
-
 var actionForm = $("#actionForm");
 $(".paginate_button a").on("click", function(e){
 	
@@ -78,5 +70,3 @@ $(".paginate_button a").on("click", function(e){
 });
 </script>
 <%@ include file="../includes/footer.jsp" %>
-</body>
-</html>

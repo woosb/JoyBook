@@ -2,13 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
 	<div align="center">
 	<h1>고객 등록</h1>
@@ -74,7 +67,7 @@
 			<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }"/>
 		</form>
 	</div>
-<%@ include file="../includes/footer.jsp" %>
+<%@ include file="../includes/commonscript.jsp" %>
 </body>
 <!-- JQUERY CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -94,5 +87,4 @@
 		});
 	});
 </script>
-</html>
-		
+<%@ include file="../includes/footer.jsp" %>

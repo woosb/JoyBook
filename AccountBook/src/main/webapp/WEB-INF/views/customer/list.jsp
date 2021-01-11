@@ -2,19 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Joy</title>
-<style>
-	thead, tfoot{
-		color :  #FFFF00;
-		background-color :black;
-	}
-</style>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
 <main role="main">
 	<div align="center">
@@ -99,9 +86,8 @@
 				<input type="hidden" name="keyword" value='<c:out value="${pageMaker.cri.keyword }"/>'>
 			</form>
 		</div>
-<%@ include file="../includes/footer.jsp" %>
-<!-- JQUERY CDN -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</main>
+<%@ include file="../includes/commonscript.jsp" %>
 <script type="text/javascript">
 	$(document).ready(function(){
 		
@@ -131,4 +117,4 @@
 		searchForm.submit();
 	});
 </script>
-</html>
+<%@ include file="../includes/footer.jsp" %>

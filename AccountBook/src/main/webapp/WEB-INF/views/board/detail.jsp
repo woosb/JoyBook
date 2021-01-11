@@ -2,15 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
-
 	<div align="center">
 		<div class="table-responsive" style="padding:30px 30px;">
 		<h1>프로그래밍 갤러리</h1>
@@ -161,7 +153,8 @@
     </aside><!-- /.blog-sidebar -->
 
   </div><!-- /.row -->
-<%@ include file="../includes/footer.jsp" %>
+</main>
+<%@ include file="../includes/commonscript.jsp" %>
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 <script>
 	$(document).ready(function() {
@@ -218,3 +211,4 @@
 		}
 	});
 </script>
+<%@ include file="../includes/footer.jsp" %>

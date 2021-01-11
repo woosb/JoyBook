@@ -2,13 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
 <div align="center">
 	<h1>수정하기</h1>
@@ -29,9 +22,8 @@
 	<br><hr>
 	<button onclick="self.location='/board/list'">뒤로가기</button>
 	<form action="board/recommend" method="post">
-		<button type="submit">${sessionScope.username}	추천하기</button>
+		<button type="submit"><c:out value="${userId}"/> 추천하기</button>
 	</form>
 </div>
+<%@ include file="../includes/commonscript.jsp" %>
 <%@ include file="../includes/footer.jsp" %>
-</body>
-</html>

@@ -2,9 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
 <%@ include file="includes/header.jsp" %>
-
 <main role="main">
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -138,4 +136,6 @@
     <!-- /END THE FEATURETTES -->
 
   </div><!-- /.container -->
+</main>
+<%@ include file="includes/commonscript.jsp" %>
 <%@ include file="includes/footer.jsp" %>

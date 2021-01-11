@@ -2,66 +2,60 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
-<main role="main" class="container">
-<h1>글 쓰 기 </h1>
-<form action="/board/insert" method="post">
-	<table border="1">
-		<tr>
-			<th>제목</th>
-			<td><input type="text" name="title"></td>
-		</tr>
-		<tr>
-			<th>내용</th>
-			<td><textarea rows="10" name="content" class="summernote"></textarea></td>
-		</tr>
-	</table>
-	
-	<input type="submit" id="uploadBtn" value="제출하기">
-	
-</form>
-<img src="/download?imageFileName=ㅎ로.gif" width="100px">
-	<span>파일첨부</span>
-	<input type="file" name="uploadFile" multiple>
-	<button id="uploadBtn" onclick="uploadFile();">Upload</button>
-</div>
-<%@ include file="../includes/footer.jsp" %>
+<main role="main">
+	<div class="container">
+	<br>
+		<h1>게시글 작성 하기</h1>
+		<form method="post">
+			<input type="text" name="title">
+			<textarea id="summernote" name="editordata"></textarea>
+		</form>
+		<button onclick="test();">테스트</button>
+	</div>
+</main>
+<%@ include file="../includes/commonscript.jsp" %>
 <script>
-function uploadFile(){
-	var formData = new FormData();
-	var inputFile = $("input[name='uploadFile']");
-	
-	var files = inputFile[0].files;
-	
-	console.log(files);
-	
-	for(var i = 0; i <files.length; i++){
-		formData.append("uploadFile", files[i]);
+	function test(){
+		var markupStr = $('#summernote').summernote('code');
+		console.log(markupStr);
 	}
 	
-	$.ajax({
-		url: '/uploadAjax',
-		processData: false,
-		contentType: false,
-		data: formData,
-		type:'post',
-		success: function(result){
-			alert(result);
-		}
+	$(function(){
+		$('#summernote').summernote({
+			placeholder: 'Hello Bootstrap 4',
+	        tabsize: 2,
+	        height: 500,
+	        minHeight : null,
+	        maxHeight : null,
+	        focus : true,
+	        callbacks: {
+				onImageUpload: function(files, editor, welEditable) {
+					for (var i = 0; i < files.length; i++) {
+						sendFile(files[i], this);
+					}
+		        }
+			}
+		});
+		
+		function sendFile(file, el) {
+			var form_data = new FormData();
+	      	form_data.append('file', file);
+	      	$.ajax({
+	        	data: form_data,
+	        	type: "POST",
+	        	url: '/summernoteUpload',
+	        	cache: false,
+	        	contentType: false,
+	        	enctype: 'multipart/form-data',
+	        	processData: false,
+	        	success: function(img_name) {
+	        		console.log(img_name);
+	          		$(el).summernote('editor.insertImage', img_name);
+	        	}
+	      	});
+	    }
 	});
-}
-</script>
-<script>
-$(document).ready(function(){
 	
-});
 </script>
-</body>
-</html>
+<%@ include file="../includes/footer.jsp" %>

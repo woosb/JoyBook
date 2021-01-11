@@ -2,13 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
 <main role="main">
 	<div class="container">
@@ -63,8 +56,8 @@
 			</table>
 		</div>
 	</div>
-<%@ include file="../includes/footer.jsp" %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+</main>
+<%@ include file="../includes/commonscript.jsp" %>
 <script>
 
 /* bar chart */
@@ -140,5 +133,4 @@ if (chLine) {
 }
 
 </script>
-</body>
-</html>
+<%@ include file="../includes/footer.jsp" %>

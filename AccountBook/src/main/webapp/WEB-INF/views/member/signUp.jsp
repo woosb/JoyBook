@@ -2,12 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>SB Admin 2 - Register</title>
-</head>
-<body>
 <%@ include file="../includes/header.jsp" %>
     <div align="center">
     	<h1>회원가입</h1>
@@ -48,10 +42,7 @@
 	    <a class="small" href="/member/login">Already have an account? Login!</a>
 	</div>
 	</div>
-<%@ include file="../includes/footer.jsp" %>
-</body>
-	<!-- JQUERY CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<%@ include file="../includes/commonscript.jsp" %>
 	<script type="text/javascript">
 		function check_pw(){
             var pw = document.getElementById('pw').value;
@@ -109,4 +100,4 @@
 			});
 		});
 	</script>
-</html>
+<%@ include file="../includes/footer.jsp" %>

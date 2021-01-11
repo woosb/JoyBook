@@ -13,10 +13,8 @@
     <title>Signin Template · Bootstrap</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
-
     <!-- Bootstrap core CSS -->
-<link href="/resources/bootstrap/assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
+	<link href="/resources/bootstrap/assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -37,24 +35,23 @@
     <link href="/resources/bootstrap/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
-<form class="form-signin" method='post' action="/member/signIn">
-  <img class="mb-4" src="/resources/images/main.png" alt="" width="72" height="72">
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" id="inputEmail" name="userId" class="form-control" placeholder="Email address" required autofocus>
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" name="userPw" class="form-control" placeholder="Password" required>
-  <div class="checkbox mb-3">
-  <label>
-    <input type="checkbox" id="customCheck" name="remember-me" value="remember-me"> Remember me
-  </label>
-  </div>
-  <input class="btn btn-lg btn-primary btn-block" type="submit" id="signIn" value="Sign in">
-  <a href="/member/signUp" class="btn btn-lg btn-primary btn-block">Sign up</a>
-  <p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
-</form>
-</body>
-</html>
+	<form class="form-signin" method='post' action="/member/signIn">
+		<img class="mb-4" src="/resources/images/main.png" alt="" width="72" height="72">
+		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+		<label for="inputEmail" class="sr-only">Email address</label>
+		<input type="email" id="inputEmail" name="userId" class="form-control" placeholder="Email address" required autofocus>
+		<label for="inputPassword" class="sr-only">Password</label>
+		<input type="password" id="inputPassword" name="userPw" class="form-control" placeholder="Password" required>
+		<div class="checkbox mb-3">
+		<label>
+		<input type="checkbox" id="customCheck" name="remember-me" value="remember-me"> Remember me
+		</label>
+		</div>
+		<input class="btn btn-lg btn-primary btn-block" type="submit" id="signIn" value="Sign in">
+		<a href="/member/signUp" class="btn btn-lg btn-primary btn-block">Sign up</a>
+		<p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+	</form>
+
 <!-- JQUERY CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -76,4 +73,5 @@
 
 	});
 </script>
+</body>
 </html>

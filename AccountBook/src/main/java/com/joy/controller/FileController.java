@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,9 +27,10 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class FileController {
 	
-	@GetMapping(value="/download")
-	public void downloadFile(@RequestParam("imageFileName")String imageFileName, HttpServletResponse response, HttpSession session) throws IOException {
-		String userId = (String)session.getAttribute("userId");
+	@GetMapping(value="/download/{userId}/{imageFileName:.+}")
+	public void downloadFile(@PathVariable("userId")String userId, @PathVariable("imageFileName")String imageFileName,HttpServletResponse response, HttpSession session) throws IOException {
+		log.info(imageFileName);
+		
 		String IMAGE_REPO = "C:\\imgTest\\" + userId + "\\";
 		String downFile = IMAGE_REPO + imageFileName;
 		File file = new File(downFile);
@@ -45,34 +50,33 @@ public class FileController {
 		out.close();
 	}
 	
-	@PostMapping("/uploadAjax")
-	public ResponseEntity<String> uploadFormPost(MultipartFile[] uploadFile, Model model, HttpSession session) {
-		String userId = (String)session.getAttribute("userId");
-		String IMAGE_REPO = "C:\\imgTest\\" + userId;
+	@PostMapping(value="/summernoteUpload")
+	public void profileUpload(HttpSession session, MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		log.info(file.getOriginalFilename());
+		String userId= (String)session.getAttribute("userId");
 		
-		ResponseEntity<String> result = null;
-		for(MultipartFile multipartFile : uploadFile) {
-			System.out.println("====================================");
-			System.out.println("Upload File Name : " + multipartFile.getOriginalFilename());
-			System.out.println("Upload File Size : " + multipartFile.getSize());
-			
-			File Folder = new File(IMAGE_REPO);
-			if(!Folder.exists()) {
-				try {
-					Folder.mkdir();
-				}catch(Exception e) {
-					e.getStackTrace();
-				}
-			}
-			
-			File saveFile = new File(IMAGE_REPO, multipartFile.getOriginalFilename());
-			try {
-				multipartFile.transferTo(saveFile);
-				result = ResponseEntity.status(HttpStatus.OK).body("success");
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		// 업로드할 폴더 경로
+		String realFolder = "C:\\imgTest";
+		UUID uuid = UUID.randomUUID();
+
+		// 업로드할 파일 이름
+		String org_filename = file.getOriginalFilename();
+		String str_filename = uuid.toString() + org_filename;
+
+		System.out.println("원본 파일명 : " + org_filename);
+		System.out.println("저장할 파일명 : " + str_filename);
+
+		String filepath = realFolder + "\\" + userId + "\\" + str_filename;
+		System.out.println("파일경로 : " + filepath);
+
+		File f = new File(filepath);
+		if (!f.exists()) {
+			f.mkdirs();
 		}
-		return result;
+		file.transferTo(f);
+		out.println("/download/"+userId+"/"+str_filename);
+		out.close();
 	}
 }
