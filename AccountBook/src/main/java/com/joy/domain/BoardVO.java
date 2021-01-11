@@ -10,6 +10,7 @@ public class BoardVO {
 	private String userId;
 	private String title;
 	private String thumbnail;
+	private String cardText;
 	private String content;
 	private Date regDate;
 	private Date updateDate;

@@ -14,7 +14,10 @@ public interface BoardService {
 	public List<BoardVO> selectList(Criteria cri);
 	public BoardVO selectDetail(int id);
 	public void insert(BoardVO vo);
-	public void delete(BoardVO vo);
+	
+	public int delete(BoardVO vo);
+	public Integer getRef(int id);
+	
 	public void modify(BoardVO vo);
 	public void recommend(int id);
 	public Integer getTotal();

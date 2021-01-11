@@ -28,9 +28,9 @@
 	<insert id="insert">
 		insert into 
 		board
-			(userId, title, thumbnail, content, regDate, ref)
+			(userId, title, thumbnail, cardText, content, regDate, ref)
 		values
-			(#{userId}, #{title}, #{thumbnail}, #{content}, #{regDate}, #{ref})
+			(#{userId}, #{title}, #{thumbnail}, #{cardText}, #{content}, #{regDate}, #{ref})
 	</insert>
 	
 	<update id="updateHit">
@@ -52,9 +52,11 @@
 		set 
 			title   = #{title}, 
 			content = #{content}, 
-			updateDate = #{updateDate} 
+			updateDate = now(),
+			thumbnail = #{thumbnail},
+			cardText = #{cardText}
 		where 
-			id=#{id}
+			id = #{id}
 	</update>
 	
 	<update id="recommend">

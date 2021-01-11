@@ -66,15 +66,18 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void delete(BoardVO vo) {
+	public int delete(BoardVO vo) {
 		log.info(vo.toString());
-		mapper.delete(vo);
+		return mapper.delete(vo);
 	}
-
+	
+	@Override
+	public Integer getRef(int id) {
+		return mapper.getRef(id);
+	}
+	
 	@Override
 	public void modify(BoardVO vo) {
-		Date date = new Date();
-		vo.setUpdateDate(date);
 		mapper.modify(vo);
 	}
 	
@@ -163,5 +166,5 @@ public class BoardServiceImpl implements BoardService{
 			response.addCookie(newCookie);
 		}
 		log.info("추천버튼 눌림");
-	}	
+	}
 }

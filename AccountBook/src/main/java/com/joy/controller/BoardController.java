@@ -16,8 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,34 +64,43 @@ public class BoardController {
 		log.info("total: " + total);
 	}
 	
-	@GetMapping("/contents")
+	@GetMapping(value= "/contents", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public void getList() {
-		
+	public List<BoardVO> getList(Criteria cri) {
+		List<BoardVO> list = service.selectList(cri);
+		for(BoardVO vo : list) {
+			log.info(vo.toString());
+		}
+		return list;
 	}
 	
-	@GetMapping("/detail")
+	@GetMapping("/detail/{id}")
 	public String selectDetail(HttpSession session,
-			@RequestParam(value="id") String id ,
-			Model model, 
+			@PathVariable(value="id") String id ,
 			HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		
+			HttpServletResponse response,
+			Model model) throws UnsupportedEncodingException {
 		service.setHitCookie(request, response, session, id);
-		
+		model.addAttribute("id", Integer.parseInt(id) );
+		return "/board/detail";
+	}
+	
+	@GetMapping(value="/detailContents/{id}", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public BoardVO getDetail(@PathVariable("id") String id) {
+		BoardVO vo = service.selectDetail(Integer.parseInt(id));		
+		return vo;
+	}
+	
+	@GetMapping(value="/reply/{id}", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<BoardVO> getReply(@PathVariable("id") String id){
 		List<BoardVO> reply = service.selectReply(Integer.parseInt(id));
-		model.addAttribute("reply", reply);
-		
-		BoardVO vo = service.selectDetail(Integer.parseInt(id));
-		model.addAttribute("detail", vo);
-		
-		return "board/detail";
+		return reply;
 	}
 	
 	@GetMapping("/insert")
-	public void insert() {
-		
-	}
+	public void insert() {}
 	
 	@PostMapping("/insert")
 	public String insert(HttpSession session, BoardVO vo) {
@@ -98,18 +110,18 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@GetMapping("/delete")
-	public String delete(@RequestParam(value="ref") String ref) {
+	@DeleteMapping("/delete/{id}")
+	@ResponseBody
+	public int delete(@PathVariable(value="id") String id) {
 		BoardVO vo = new BoardVO();
-		vo.setRef(Integer.parseInt(ref));
-		service.delete(vo);
-		return "redirect:/board/list";
+		vo.setRef(service.getRef(Integer.parseInt(id)));
+		return service.delete(vo);
 	}
 	
-	@GetMapping("/modify")
-	public void modify(@RequestParam(value="id") String id, Model model) {
-		BoardVO vo = service.selectDetail(Integer.parseInt(id));
-		model.addAttribute("vo", vo);
+	@GetMapping("/modify/{id}")
+	public String modify(@PathVariable(value="id") String id, Model model) {
+		model.addAttribute("id", id);
+		return "/board/modify";
 	}
 	
 	@PostMapping("/modify")
@@ -118,13 +130,12 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@GetMapping("/recommend")
-	public String recommend(HttpSession session,
-			@RequestParam(value="id") String id, 
+	@PutMapping(value="/recommend/{id}")
+	@ResponseBody
+	public void recommend(HttpSession session,
+			@PathVariable(value="id") String id, 
 			HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		service.setRecCookie(request, response, session, id);
-
-		return "redirect:/board/detail?id="+id;
 	}
 	
 	@PostMapping("/reply")

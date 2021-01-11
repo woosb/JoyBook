@@ -37,7 +37,13 @@ public class FileController {
 		response.addHeader("Content-disposition", "attachment; fileName="+imageFileName);
 		
 		OutputStream out = response.getOutputStream();
-		FileInputStream in = new FileInputStream(file);
+		FileInputStream in;
+		try {
+			in = new FileInputStream(file);
+		}catch(IOException e) {
+			in = new FileInputStream("C:\\imgTest\\default\\default.jpg" );
+			e.printStackTrace();
+		}
 		byte[] buffer = new byte[1024*1024*10];
 		while(true) {
 			int count = in.read(buffer);
@@ -76,6 +82,31 @@ public class FileController {
 			f.mkdirs();
 		}
 		file.transferTo(f);
+		out.println("/download/"+userId+"/"+str_filename);
+		out.close();
+	}
+	
+	@PostMapping("/uploadAjaxAction")
+	public void uploadAjaxPost(MultipartFile uploadFile, HttpSession session, HttpServletResponse response) throws Exception{
+		PrintWriter out = response.getWriter();
+		UUID uuid = UUID.randomUUID();
+
+		String userId = (String)session.getAttribute("userId");
+		String IMAGE_REPO = "C:\\imgTest\\" + userId + "\\";
+		System.out.println("update ajax post........");
+		String uploadFolder = IMAGE_REPO;
+		
+		System.out.println("====================================");
+		System.out.println("Upload File Name : " + uploadFile.getOriginalFilename());
+		System.out.println("Upload File Size : " + uploadFile.getSize());
+		
+		String uploadFilename = uploadFile.getOriginalFilename();
+		String str_filename = uuid.toString() + uploadFilename;
+
+		System.out.println("original file name : " + uploadFilename);
+		
+		File saveFile = new File(IMAGE_REPO, str_filename);
+		uploadFile.transferTo(saveFile);
 		out.println("/download/"+userId+"/"+str_filename);
 		out.close();
 	}

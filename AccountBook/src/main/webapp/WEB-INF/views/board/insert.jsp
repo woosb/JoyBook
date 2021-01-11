@@ -7,16 +7,56 @@
 	<div class="container">
 	<br>
 		<h1>스타일 등록하기</h1>
+		
+		<div>
+			Thumnail : <input type="file" name="uploadFile">
+			<button id="uploadBtn">Upload</button><br>
+		</div>
+		
 		<form action="/board/insert" method="post">
+			썸네일 설명 : <input type="text" name="cardText" id="cardText">
 			<input type="text" name="title" class="form-control" placeholder="title" style="margin : 10px 0px; ">
 			<div id="contents">
 				<textarea class="summernote" id="summernote" name="content"></textarea>
 			</div>
-			<div style="margin:20px 0px;" align="center"><input type="submit" class="btn btn-secondary btn-lg btn-primary" value="제출하기"></div>
-		</form>		
+			<input type="hidden" name="thumbnail" id="thumbnail">
+			<div style="margin:20px 0px;" align="center">
+				<input type="submit" class="btn btn-secondary btn-lg btn-primary" value="제출하기">
+			</div>
+		</form>	
 	</div>
+	<button onclick="test();">test</button>
 </main>
 <%@ include file="../includes/commonscript.jsp" %>
+<script>
+function test(){
+	var content = $("#summernote").val();
+	console.log(content);
+}
+</script>
+<script>
+$("#uploadBtn").on("click", function(e){
+	var formData = new FormData();
+	var inputFile = $("input[name='uploadFile']");
+	
+	var files = inputFile[0].files;
+	
+	console.log(files);
+	
+	formData.append("uploadFile", files[0]);
+	$.ajax({
+		url: '/uploadAjaxAction',
+		processData: false,
+		contentType: false,
+		data: formData,
+		type:'post',
+		success: function(img_name){
+		 	console.log(img_name);
+		 	$("#thumbnail").val(img_name);
+		}
+	});
+});
+</script>
 <script>
 	$(function(){
 		$('.summernote').summernote({

@@ -4,104 +4,85 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp" %>
 <main role="main">
-	<div align="center">
-		<div class="table-responsive" style="padding:30px 30px;">
-		<h1>프로그래밍 갤러리</h1>
-		<hr>
-		<article>
-			<div class="blog-post">
-			<header>
-				<div class="content_head_left">
-					<h3>${detail.title}</h3>
-					<div class="writer">
-						<span>${detail.userId}</span>
-						<span>${detail.regDate}</span>
-						<span>${detail.updateDate}</span>
-					</div>
-				</div>
-				<div class="content_head_right">
-					<div class="content">
-						<span>조회 ${detail.hit}</span>
-						<span>추천 ${detail.recommend}</span>
-						<span>댓글 </span>
-					</div>
-				</div>
-			</header>
-			<hr>
-			<div class="contents">
-				<p>${detail.content }</p>	
-			</div>
-			</div>
-		</article>
-		<hr>
-		<ul id="replyUL"></ul>
-		<br>
-		<button onclick="self.location='/board/delete?ref='+${detail.ref}">삭제</button>
-		<button onclick="self.location='/board/modify?id='+${detail.id}">수정</button>
+	<div class="container" align="center" style="margin:20px 0px;">
+		<div id="detail">
+			
+		</div>
+		<div id="detail2">
+			
+		</div>
 		<button onclick="self.location='/board/list'">뒤로가기</button>
-		<button onclick="self.location='/board/recommend?id=${detail.id}'">추천하기</button>
 		<form id="replyForm">
 			댓글달기 : <input type="text" name="content" id="replyContent">
 			<input type="button" id="replyBtn" value="댓글작성">
 		</form>
-		</div>
 	</div>
 </main>
 <%@ include file="../includes/commonscript.jsp" %>
-<script type="text/javascript" src="/resources/js/reply.js"></script>
 <script>
-	$(document).ready(function() {
-		var id = "${detail.id}";
-		var userId = "${sessionScope.userId}";
-		var ref = "${detail.ref}";
-		var step = "${detail.step}";
-		var refOrder = "${detail.refOrder}";
-		var answerNum = "${detail.answerNum}";
-		var parentNum = "${detail.parentNum}";
-		
-		$("#replyBtn").on("click",function(){
-			var content = $("#replyContent").val();
-			replyService.add(
-				{	"content":content, 
-					"id":id, 
-					"userId":userId,
-					"ref":ref, 
-					"step":step, 
-					"refOrder":refOrder, 
-					"answerNum":answerNum, 
-					"parentNum":parentNum},
-				function(result){
-					alert("RESULT : " + result);
-				}
-			);
-			$('#replyContent').val('');
-			replyList();
-		});
-		
-		var replyUL = $("#replyUL");
-		replyList();
-		function replyList(){
-			replyService.getList({id : id}, function(list){
-				console.log("getList......");
-				if(list == null || list.length == 0){
-					replyUL.html("");
-					return;
-				}
-				var str = "";
-				for(var i = 0, len = list.length ||0; i < len; i++){
-					str += "<li>"+list[i].id;
-					str += " 작성자 : "+list[i].userId
-					str += " 내용 : "+list[i].content
-					str += " regDate : "+ replyService.displayTime(list[i].regDate)
-					str += " ref : "+ list[i].ref
-					str += " refOrder : "+ list[i].refOrder
-					str += " parentNum : "+ list[i].parentNum
-					str += " step : "+ list[i].step
-					str += "</li>";
-				}
-				replyUL.html(str);
-			});
+reset();
+function reset(){
+	$.ajax({
+		url:"/board/detailContents/"+'${id}'
+	}).done(function(result){
+		var detail = document.getElementById("detail");
+// 		var card = document.createElement("div");
+// 		card.setAttribute("class", "col-md-12");
+		var str = "";
+		str += "<div class='col-md-12'style='margin:0 auto;'>"
+		str += '<div class="card mb-4 shadow-sm">';
+		if(result.thumbnail == ""){
+			str += '<img src="/download/default/default.jpg" width="90%" height="90%" style="margin:0 auto;"/>';
+		}else{
+			str += '<img src="'+ result.thumbnail+'" width="90%" height="90%" style="margin:0 auto;"/>';
 		}
+		str += ' <div class="card-body">';
+		str += '<p class="card-text">'+result.cardText + '<br><hr>'
+		str += '<h1>'+result.title+'</h1><hr>'+ result.content
+		str += '<br><small class="text-muted"> 조회수 '+ result.hit + '&nbsp;';
+		str += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-heart-eyes" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M11.315 10.014a.5.5 0 0 1 .548.736A4.498 4.498 0 0 1 7.965 13a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .548-.736h.005l.017.005.067.015.252.055c.215.046.515.108.857.169.693.124 1.522.242 2.152.242.63 0 1.46-.118 2.152-.242a26.58 26.58 0 0 0 1.109-.224l.067-.015.017-.004.005-.002zM4.756 4.566c.763-1.424 4.02-.12.952 3.434-4.496-1.596-2.35-4.298-.952-3.434zm6.488 0c1.398-.864 3.544 1.838-.952 3.434-3.067-3.554.19-4.858.952-3.434z"/></svg>';
+		str += '&nbsp;'+result.recommend+'&nbsp;'
+		str += '댓글 '+result.answerNum+'</small></p>'
+		str += '<div class="d-flex justify-content-between align-items-center">';
+		str += '<div class="btn-group">';
+		str += '<a href="/board/detail/'+result.id+'"class="btn btn-sm btn-outline-secondary">View</button>';
+		str += '<a href="/board/modify/'+result.id+'" class="btn btn-sm btn-outline-secondary">Edit</a>';
+		str += '<button onclick="recommend('+${id}+')" class="btn btn-sm btn-outline-secondary">Like  ';
+		str += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16"><path d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/></svg>';
+		str += '</button>';
+		str += '</div>';
+		str += '<small class="text-muted">'+displayTime(result.regDate)+'</small>';
+		str += '</div></div></div></div>';
+// 		card.innerHTML = str;		
+// 		detail.appendChild(card);
+		detail.innerHTML = str;
+		console.log(result);
+		console.log(displayTime(result.regDate));
 	});
+	
+	$.ajax({
+		url:"/board/reply/"+'${id}'
+	}).done(function(result){
+		var detail2 = document.getElementById("detail2");
+// 		var card = document.createElement("div");
+		var str = "";
+		str += "댓글";
+// 		card.innerHTML = str;		
+// 		detail2.appendChild(card);
+		detail2.innerHTML = str;
+		console.log(result);	
+	});
+}
 </script>
+<script>
+	function recommend(id){
+		$.ajax({
+			url:"/board/recommend/"+id,
+			type:"put"
+		}).done(function(result){
+			reset();
+		});
+	}
+</script>
+
 <%@ include file="../includes/footer.jsp" %>
