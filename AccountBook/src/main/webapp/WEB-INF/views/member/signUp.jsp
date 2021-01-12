@@ -2,48 +2,75 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp" %>
-    <div align="center">
-    	<h1>회원가입</h1>
-	    <form class="user" action="/member/signUp" method="post" id="loginForm">
-		    <table border="1">
-		    	<tr>
-		    		<td>First Name</td>
-		    		<td><input type="text" id="firstName"  placeholder="First Name"></td>
-		    	</tr>
-		    	<tr>
-		    		<td>Last Name</td>
-		    		<td><input type="text"  id="lastName" placeholder="Last Name"></td>
-		    	</tr>
-		    	<tr>
-		    		<td>Email</td>
-		    		<td><input type="email"  placeholder="Email Address" name ="userId" id="id"></td>
-		    	</tr>
-		    	<tr>
-		    		<td>Password</td>
-		    		<td><input type="password"  name="userPw" id="pw" onchange="check_pw()" placeholder="Password"></td>
-		    	</tr>
-		    	<tr>
-		    		<td>Password Check</td>
-		    		<td><input type="password"   name="userPw2" id="pw2" onchange="check_pw()" placeholder="Repeat Password"></td>
-		    	</tr>
-		    	<tr>
-		    		<td colspan="2"><span id="check"></span></td>
-		    	</tr>
-		    	<tr>
-		    		<td><button type="submit" id="signUp" >Register Account</button></td>
-		    		<td><button type="reset" id="reset" >cancel</button></td>
-		    	</tr>
-		    </table>
-			<input type="hidden" name="userName" id="userName">
-		   	<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }"/>
-	    </form>
-	<div class="text-center">
-	    <a class="small" href="/member/login">Already have an account? Login!</a>
-	</div>
-	</div>
-	<%@ include file="../includes/commonscript.jsp" %>
-	<script type="text/javascript">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Signin Template · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="/resources/bootstrap/signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+	<form class="user form-signin" action="/member/signUp" method="post" id="loginForm">
+		<img class="mb-4" src="/resources/images/main.png" alt="" width="72" height="72">
+		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+		<label for="firstName" class="sr-only">First Name</label>
+		<input type="text" id="firstName"  placeholder="First Name" class="form-control" required autofocus>
+		
+		<label for="lastName" class="sr-only">Last Name</label>
+		<input type="text"  id="lastName" placeholder="Last Name" class="form-control" required>
+		
+		<label for="email" class="sr-only">Email Address</label>
+		<input type="email"  placeholder="Email Address" name ="userId" id="id" class="form-control" required>
+		
+		<label for="inputPassword" class="sr-only">Password</label>
+		<input style="margin:0px;" type="password"  name="userPw" id="pw" onchange="check_pw()" placeholder="Password" class="form-control"  required>
+		
+		<label for="inputPassword" class="sr-only">Repeat Password</label>
+		<input type="password"   name="userPw2" id="pw2" onchange="check_pw()" placeholder="Repeat Password" class="form-control" required>
+		
+		<span id="check"></span>
+		
+		<div class="checkbox mb-3">
+		<label>
+		<input type="checkbox" id="customCheck" name="remember-me" value="remember-me"> Remember me
+		</label>
+		</div>
+		<button type="submit" id="signUp" class="btn btn-lg btn-primary btn-block">Register Account</button>
+		<button type="reset" id="reset" class="btn btn-lg btn-primary btn-block">cancel</button>
+		<a class="small" href="/member/signin">Already have an account? Login!</a>
+		
+		<p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
+		<input type="hidden" name="userName" id="userName">
+	</form>
+
+<!-- JQUERY CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
 		function check_pw(){
             var pw = document.getElementById('pw').value;
             var SC = ["!","@","#","$","%"];
@@ -100,4 +127,5 @@
 			});
 		});
 	</script>
-<%@ include file="../includes/footer.jsp" %>
+</body>
+</html>

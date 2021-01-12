@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../includes/header.jsp" %>
+<main role="main" class="container" style="margin : 10px 0;">
 	<div align="center">
 	<h1>고객 등록</h1>
 		<form id="registerForm" action="/customer/register" method="post">
@@ -67,10 +68,9 @@
 			<input type='hidden' name="${_csrf.parameterName }" value="${_csrf.token }"/>
 		</form>
 	</div>
+</main>
 <%@ include file="../includes/commonscript.jsp" %>
 </body>
-<!-- JQUERY CDN -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#regBtn").on("click", function(){
