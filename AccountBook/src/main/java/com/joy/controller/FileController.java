@@ -96,6 +96,11 @@ public class FileController {
 		System.out.println("update ajax post........");
 		String uploadFolder = IMAGE_REPO;
 		
+		File f = new File(uploadFolder);
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+		
 		System.out.println("====================================");
 		System.out.println("Upload File Name : " + uploadFile.getOriginalFilename());
 		System.out.println("Upload File Size : " + uploadFile.getSize());
