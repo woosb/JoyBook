@@ -138,5 +138,4 @@
   </div><!-- /.container -->
 </main>
 <%@ include file="includes/commonscript.jsp" %>
-
 <%@ include file="includes/footer.jsp" %>

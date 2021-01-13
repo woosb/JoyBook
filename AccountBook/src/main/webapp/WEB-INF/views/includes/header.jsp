@@ -14,7 +14,6 @@
 	<!-- include summernote css/js -->
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-	<!-- 	<link href="/resources/bootstrap/assets/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 	<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/carousel/">
 	<link href="/resources/bootstrap/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
@@ -82,3 +81,4 @@
     </div>
   </nav>
 </header>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
