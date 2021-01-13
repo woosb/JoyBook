@@ -35,6 +35,8 @@
 </div>
 </main>
 <%@ include file="../includes/commonscript.jsp" %>
+<%-- <jsp:include page="/WEB-INF/views/includes/commonscript.jsp"/> --%>
+
 <script>
 getContents();
 function getContents(){

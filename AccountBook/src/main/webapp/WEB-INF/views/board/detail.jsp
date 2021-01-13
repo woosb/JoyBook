@@ -51,15 +51,13 @@ function reset(){
 		url:"/board/detailContents/"+'${id}'
 	}).done(function(result){
 		var detail = document.getElementById("detail");
-// 		var card = document.createElement("div");
-// 		card.setAttribute("class", "col-md-12");
 		var str = "";
 		str += '<div class="col-md-12" style="margin:0 auto;">'
 		str += '<div class="card mb-4 shadow-sm">';
 		if(result.thumbnail == ""){
-			str += '<img src="/download/default/default.jpg" width="90%" height="90%" style="margin:0 auto;"/>';
+			str += '<img src="/download/default/default.png" width="70%" height="70%" style="margin:0 auto;"/>';
 		}else{
-			str += '<img src="'+ result.thumbnail+'" width="90%" height="90%" style="margin:0 auto;"/>';
+			str += '<img src="'+ result.thumbnail+'" width="70%" height="70%" style="margin:0 auto;"/>';
 		}
 		str += '<div class="card-body">';
 		str += '<p class="card-text">'+result.cardText + '<br><hr>'
@@ -78,8 +76,6 @@ function reset(){
 		str += '</div>';
 		str += '<small class="text-muted">'+displayTime(result.regDate)+'</small>';
 		str += '</div></div></div></div>';
-// 		card.innerHTML = str;		
-// 		detail.appendChild(card);
 		detail.innerHTML = str;
 		console.log(result);
 		console.log(displayTime(result.regDate));

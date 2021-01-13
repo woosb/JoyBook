@@ -2,40 +2,37 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp" %>
+<%-- <%@ include file="../includes/header.jsp" %> --%>
 <main role="main">
 	<div class="container">
 	<br>
 		<h1>스타일 등록하기</h1>
-		
+		<hr>
+		<h4>썸네일</h4>
+		<img width="300px" id="img">
 		<div>
-			Thumnail : <input type="file" name="uploadFile">
-			<button id="uploadBtn">Upload</button><br>
+			Thumnail : <input type="file" name="uploadFile" onchange="uploadThum();">
 		</div>
-		
 		<form action="/board/insert" method="post">
-			썸네일 설명 : <input type="text" name="cardText" id="cardText">
+			썸네일 설명 : <textarea style="height:250px; width:100%;" name="cardText" id="cardText"></textarea>
+			<input type="hidden" name="thumbnail" id="thumbnail">
+			<hr>
+			<h4>본문 작성</h4>
 			<input type="text" name="title" class="form-control" placeholder="title" style="margin : 10px 0px; ">
 			<div id="contents">
 				<textarea class="summernote" id="summernote" name="content"></textarea>
 			</div>
-			<input type="hidden" name="thumbnail" id="thumbnail">
 			<div style="margin:20px 0px;" align="center">
 				<input type="submit" class="btn btn-secondary btn-lg btn-primary" value="제출하기">
 			</div>
 		</form>	
 	</div>
-	<button onclick="test();">test</button>
 </main>
 <%@ include file="../includes/commonscript.jsp" %>
+<%@ include file="../includes/summernote.jsp" %>
+
 <script>
-function test(){
-	var content = $("#summernote").val();
-	console.log(content);
-}
-</script>
-<script>
-$("#uploadBtn").on("click", function(e){
+function uploadThum(){
 	var formData = new FormData();
 	var inputFile = $("input[name='uploadFile']");
 	
@@ -53,9 +50,10 @@ $("#uploadBtn").on("click", function(e){
 		success: function(img_name){
 		 	console.log(img_name);
 		 	$("#thumbnail").val(img_name);
+		 	$("img").attr("src", img_name);
 		}
 	});
-});
+}
 </script>
 <script>
 	$(function(){

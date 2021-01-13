@@ -2,24 +2,26 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../includes/header.jsp" %>
+<%-- <%@ include file="../includes/header.jsp" %> --%>
 <main role="main">
 	<div class="container">
 	<br>
 		<h1>스타일 수정하기</h1>
-		
+		<hr>
+		<h4>썸네일</h4>
+		<img width="300px" id="img">
 		<div>
-			Thumnail : <input type="file" name="uploadFile">
-			<button id="uploadBtn">Upload</button><br>
+			Thumnail : <input type="file" name="uploadFile" onchange="uploadThum();">
 		</div>
-		
 		<form action="/board/modify" method="post">
-			썸네일 설명 : <input type="text" name="cardText" id="cardText">
+			썸네일 설명 : <textarea style="height:250px; width:100%;" name="cardText" id="cardText"></textarea>
+			<input type="hidden" name="thumbnail" id="thumbnail">
+			<hr>
+			<h4>본문 작성</h4>
 			<input type="text" name="title" id="title" class="form-control" placeholder="title" style="margin : 10px 0px; ">
 			<div id="contents">
 				<textarea class="summernote" id="summernote" name="content"></textarea>
 			</div>
-			<input type="hidden" name="thumbnail" id="thumbnail">
 			<div style="margin:20px 0px;" align="center">
 				<input type="submit" class="btn btn-secondary btn-lg" value="제출하기">
 				<button class="btn btn-lg btn-danger" onclick="del('${id}');">삭제</button>
@@ -29,25 +31,9 @@
 	</div>
 </main>
 <%@ include file="../includes/commonscript.jsp" %>
+<%@ include file="../includes/summernote.jsp" %>
 <script>
-getContents();
-function getContents(){
-	$.ajax({
-		url:"/board/detailContents/"+'${id}'
-	}).done(function(result){
-		console.log(result.cardText);
-		console.log(result.title);
-		console.log(result.content);
-		console.log(result.thumbnail);
-		$("#cardText").val(result.cardText);
-		$("#title").val(result.title);
-		$("#summernote").val(result.content);
-		$("#thumbnail").val(result.thumbnail);
-	});
-}
-</script>
-<script>
-$("#uploadBtn").on("click", function(e){
+function uploadThum(){
 	var formData = new FormData();
 	var inputFile = $("input[name='uploadFile']");
 	
@@ -65,9 +51,27 @@ $("#uploadBtn").on("click", function(e){
 		success: function(img_name){
 		 	console.log(img_name);
 		 	$("#thumbnail").val(img_name);
+		 	$("img").attr("src", img_name);
 		}
 	});
-});
+}
+</script>
+<script>
+getContents();
+function getContents(){
+	$.ajax({
+		url:"/board/detailContents/"+'${id}'
+	}).done(function(result){
+		console.log(result.cardText);
+		console.log(result.title);
+		console.log(result.content);
+		console.log(result.thumbnail);
+		$("#cardText").val(result.cardText);
+		$("#title").val(result.title);
+		$("#summernote").val(result.content);
+		$("#thumbnail").val(result.thumbnail);
+	});
+}
 </script>
 <script>
 	$(function(){
