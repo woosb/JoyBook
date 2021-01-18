@@ -19,4 +19,5 @@ public interface CustomerService {
 	public List<CustomerVO> selectAll();
 	public void modifyCustomer(CustomerVO customer);
 	public void removeCustomer(CustomerVO customer);
+	public CustomerVO getDetail(int cus_no);
 }

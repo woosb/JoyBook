@@ -54,6 +54,26 @@ public class BoardController {
 	@Autowired
 	IncomeService incomeService;
 
+	@GetMapping(value="/search/{keyword}", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<BoardVO> searchBoard(@PathVariable("keyword") String keyword){		
+		List<BoardVO> list = service.searchList(keyword);
+		return list;
+	}
+	
+	@GetMapping(value="/search")
+	public void serchBoard(@RequestParam("keyword") String keyword, Model model) {
+		model.addAttribute("keyword", keyword);
+	}
+	
+	@GetMapping(value="/getIndexArticle", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<BoardVO> getIndexArticle(){
+		List<BoardVO> list = service.getIndexArticle();
+		
+		return list;
+	}
+	
 	@GetMapping("/list")
 	public void boardList(Model model, Criteria cri) {
 		model.addAttribute("pageName", "boardList");	
@@ -67,7 +87,8 @@ public class BoardController {
 	@GetMapping(value= "/contents/{pageNum}", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public List<BoardVO> getList(@PathVariable("pageNum") Integer pageNum, Criteria cri) {
-		cri.setPageNum(pageNum);
+		cri.setLimitStart(pageNum);
+		log.info(cri.toString());
 		List<BoardVO> list = service.selectList(cri);
 		return list;
 	}

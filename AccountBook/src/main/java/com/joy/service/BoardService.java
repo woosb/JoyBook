@@ -28,6 +28,10 @@ public interface BoardService {
 	
 	public int reply(BoardVO vo);
 	
+	public List<BoardVO> getIndexArticle();
+	public List<BoardVO> searchList(String keyword);
+	
+	
 	public void setHitCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id) throws UnsupportedEncodingException;
 	public void setRecCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id) throws UnsupportedEncodingException;
 }

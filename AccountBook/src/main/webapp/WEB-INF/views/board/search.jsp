@@ -5,7 +5,7 @@
 <%@ include file="../includes/header.jsp" %>
 <main role="main">
 <div class="container" style="margin: 20px 0px;">
-<h1>Styles</h1>
+<h1>검색 결과</h1>
 		<input class="btn btn-secondary" type="button" value="Add More" onclick="self.location='/board/insert'">
 <hr>
 	<div class="row" id="contents">
@@ -40,7 +40,7 @@
 getContents();
 function getContents(){
 	$.ajax({
-		url:"/board/contents/"+"${pageMaker.cri.pageNum }",
+		url:"/board/search/"+"${keyword }",
 		contentType:"JSON"		
 	}).done(function(result){
 		console.log(result);

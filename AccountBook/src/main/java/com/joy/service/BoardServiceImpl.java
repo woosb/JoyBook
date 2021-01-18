@@ -40,6 +40,11 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public List<BoardVO> searchList(String keyword) {
+		return mapper.searchList(keyword);
+	}
+	
+	@Override
 	public BoardVO selectDetail(int id) {
 		return mapper.selectDetail(id);
 	}
@@ -168,4 +173,10 @@ public class BoardServiceImpl implements BoardService{
 		}
 		log.info("추천버튼 눌림");
 	}
+
+	@Override
+	public List<BoardVO> getIndexArticle() {
+		return mapper.getIndexArticle();
+	}
+
 }

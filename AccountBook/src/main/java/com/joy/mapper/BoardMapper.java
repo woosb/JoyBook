@@ -28,4 +28,6 @@ public interface BoardMapper {
 	
 	public Integer getRef(int id);
 	
+	public List<BoardVO> getIndexArticle();
+	public List<BoardVO> searchList(String keyword);
 }

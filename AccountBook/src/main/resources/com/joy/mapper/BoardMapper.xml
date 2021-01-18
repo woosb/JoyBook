@@ -13,7 +13,26 @@
 			step = 0 
 		order by 
 			id desc
-		limit #{limitStart}, #{amount};
+		limit #{limitStart}, #{amount}
+	</select>
+	
+	<select id="searchList" resultType="com.joy.domain.BoardVO">
+		select 
+			* 
+		from 
+			board 
+		where 
+			step = 0 
+		and 
+			title like CONCAT('%',#{keyword},'%')
+		or
+			cardText like CONCAT('%',#{keyword},'%')
+		or	
+			content like CONCAT('%',#{keyword},'%')	
+		or 
+			userId like CONCAT('%',#{keyword},'%')	
+		order by 
+			id desc
 	</select>
 	
 	<select id="selectDetail" resultType="com.joy.domain.BoardVO">
@@ -146,5 +165,16 @@
 		from 
 			board 
 		where id=#{id}
+	</select>
+	
+	<select id="getIndexArticle" resultType="com.joy.domain.BoardVO">
+		select 
+			* 
+		from 
+			board 
+		order by 
+			hit desc 
+		limit 
+			3;
 	</select>
 </mapper>
