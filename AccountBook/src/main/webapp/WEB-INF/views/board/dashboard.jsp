@@ -10,6 +10,7 @@
 			<div class="col-md-6 py-1">
 	            <div class="card">
 	                <div class="card-body">
+	                	<h3>월별 매출액</h3>
 	                    <canvas id="chLine"></canvas>
 	                </div>
 	            </div>
@@ -17,6 +18,12 @@
 			<div class="col-md-6 py-1">
 	            <div class="card">
 	                <div class="card-body">
+	                <div align="center">
+	                	<h4>
+	                		<span style="color:#007bff"><b>신규</b></span>
+	                		<span style="color:#28a745"><b>재방문</b></span>
+	                	</h4>
+	                </div>
 	                    <canvas id="chBar"></canvas>
 	                </div>
 	            </div>
@@ -26,32 +33,46 @@
 			<table class="table table-striped table-sm">
 				<c:forEach items="${annualIncome }"  var="income">
 					<tr>
-						<td>**<c:out value="${ income.date}"/>년 총 매출</td>
-						<td><c:out value="${ income.income}"/></td>
+						<th><c:out value="${ income.date}"/>년 총 매출</th>
+						<th><c:out value="${ income.income}"/>원</th>
 					</tr>
 				</c:forEach>
-				<c:forEach items="${AnnualIncomeList }"  var="income">
-					<tr>
-						<td>**<c:out value="${ income.date}"/></td>
-						<td><c:out value="${ income.income}"/></td>
-					</tr>
-				</c:forEach>
+			</table>
+			<table class="table table-striped table-sm">
+				<tr>
+					<c:forEach items="${AnnualIncomeList }"  var="income">
+						<th><c:out value="${ income.date}"/>년</th>
+					</c:forEach>
+				</tr>
+				<tr>
+					<c:forEach items="${AnnualIncomeList }"  var="income">
+						<td><c:out value="${ income.income}"/>원</td>
+					</c:forEach>
+				</tr>
+			</table>
+			<hr>
+			<table class="table table-striped table-sm">
 				<c:forEach items="${MonthIncome }"  var="income">
 					<tr>
-						<td>**<c:out value="${ income.date}"/>월 총 매출</td>
+						<th><c:out value="${ income.date}"/>월 총 매출</th>
 						<td><c:out value="${ income.income}"/></td>
 					</tr>
 				</c:forEach>
+			</table>
+			<table class="table table-striped table-sm">
 				<c:forEach items="${MonthlyIncomeList }"  var="income">
 					<tr>
-						<td>**<c:out value="${ income.date}"/></td>
-						<td><c:out value="${ income.income}"/></td>
+						<td><c:out value="${ income.date}"/></td>
+						<td><c:out value="${ income.income}"/>원</td>
 					</tr>
 				</c:forEach>
+			</table>
+			<hr>
+			<table class="table table-striped table-sm">
 				<c:forEach items="${IncomeByReservationRoute }"  var="income">
 					<tr>
 						<td><c:out value="${ income.reservationRoute}"/>/이번년도 이번달</td>
-						<td><c:out value="${ income.income}"/></td>
+						<td><c:out value="${ income.income}"/>원</td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -83,10 +104,12 @@ if (chBar) {
     labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
     datasets: [
     {
+      label : '신규',
       data: getNewCus,
       backgroundColor: colors[0]
     },
     {
+      label : '재방문',
       data: getOldCus,
       backgroundColor: colors[1]
     }

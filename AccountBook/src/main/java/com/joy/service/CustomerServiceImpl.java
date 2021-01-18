@@ -84,4 +84,10 @@ public class CustomerServiceImpl implements CustomerService {
 	public Integer getTotal(Criteria cri) {
 		return mapper.getTotalCount(cri);		
 	}
+
+
+	@Override
+	public CustomerVO getDetail(int cus_no) {
+		return mapper.getDetail(cus_no);
+	}
 }

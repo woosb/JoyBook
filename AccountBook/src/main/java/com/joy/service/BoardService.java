@@ -16,6 +16,7 @@ public interface BoardService {
 	public void insert(BoardVO vo);
 	
 	public int delete(BoardVO vo);
+	public int deleteReply(int id);
 	public Integer getRef(int id);
 	
 	public void modify(BoardVO vo);
@@ -27,6 +28,10 @@ public interface BoardService {
 	public List<BoardVO> selectReply(int parentNum);
 	
 	public int reply(BoardVO vo);
+	
+	public List<BoardVO> getIndexArticle();
+	public List<BoardVO> searchList(String keyword);
+	
 	
 	public void setHitCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id) throws UnsupportedEncodingException;
 	public void setRecCookie(HttpServletRequest request, HttpServletResponse response, HttpSession session, String id) throws UnsupportedEncodingException;

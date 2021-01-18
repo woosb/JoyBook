@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,26 @@ public class BoardController {
 	@Autowired
 	IncomeService incomeService;
 
+	@GetMapping(value="/search/{keyword}", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<BoardVO> searchBoard(@PathVariable("keyword") String keyword){		
+		List<BoardVO> list = service.searchList(keyword);
+		return list;
+	}
+	
+	@GetMapping(value="/search")
+	public void serchBoard(@RequestParam("keyword") String keyword, Model model) {
+		model.addAttribute("keyword", keyword);
+	}
+	
+	@GetMapping(value="/getIndexArticle", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public List<BoardVO> getIndexArticle(){
+		List<BoardVO> list = service.getIndexArticle();
+		
+		return list;
+	}
+	
 	@GetMapping("/list")
 	public void boardList(Model model, Criteria cri) {
 		model.addAttribute("pageName", "boardList");	
@@ -67,7 +88,8 @@ public class BoardController {
 	@GetMapping(value= "/contents/{pageNum}", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public List<BoardVO> getList(@PathVariable("pageNum") Integer pageNum, Criteria cri) {
-		cri.setPageNum(pageNum);
+		cri.setLimitStart((pageNum-1)*12);
+		log.info(cri.toString());
 		List<BoardVO> list = service.selectList(cri);
 		return list;
 	}
@@ -102,6 +124,12 @@ public class BoardController {
 	public List<BoardVO> getReply(@PathVariable("id") String id){
 		List<BoardVO> reply = service.selectReply(Integer.parseInt(id));
 		return reply;
+	}
+	
+	@DeleteMapping(value="/reply/{id}")
+	@ResponseBody
+	public int deleteReply(@PathVariable("id") int id) {
+		return service.deleteReply(id);
 	}
 	
 	@PostMapping(value="/reply")

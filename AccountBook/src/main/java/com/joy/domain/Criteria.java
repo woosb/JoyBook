@@ -1,7 +1,5 @@
 package com.joy.domain;
 
-import org.springframework.web.util.UriComponentsBuilder;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,7 +23,7 @@ public class Criteria {
 	private String keyword;
 
 	public Criteria() {
-		this(1,10);
+		this(1,12);
 	}
 	
 	public Criteria(int pageNum, int amount) {
@@ -36,15 +34,5 @@ public class Criteria {
 	//mapper에서 <foreach item='type' collection="typeArr">에 사용하기 위해 getter를 만들어 준 것이다.
 	public String[] getTypeArr() {
 		return type == null? new String[] {} : type.split("");
-	}
-
-	public String getListLink() {
-		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
-				.queryParam("pageNum", this.pageNum)
-				.queryParam("amount", this.getAmount())
-				.queryParam("type", this.getType())
-				.queryParam("keyword", this.getKeyword());
-
-		return builder.toUriString();
 	}
 }

@@ -13,6 +13,7 @@ public interface BoardMapper {
 	public void insert(BoardVO vo);
 	public void updateHit(@Param("id") int id);
 	public int delete(BoardVO vo);
+	public int deleteReply(int id);
 	public void modify(BoardVO vo);
 	public void recommend(int id);
 	public int reply(BoardVO vo);
@@ -28,4 +29,6 @@ public interface BoardMapper {
 	
 	public Integer getRef(int id);
 	
+	public List<BoardVO> getIndexArticle();
+	public List<BoardVO> searchList(String keyword);
 }

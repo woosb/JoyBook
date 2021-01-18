@@ -5,8 +5,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.joy.domain.Criteria;
@@ -55,5 +57,17 @@ public class CustomerController {
 		customer.setDesigner_id(designer_id);
 		service.registerCustomer(customer);
 		return "redirect:/customer/list";
+	}
+
+	@GetMapping(value="/detail/{cus_no}")
+	public String getDetail(@PathVariable("cus_no") int cus_no, Model model) {
+		model.addAttribute("cus_no", cus_no);
+		return "/customer/detail";
+	}
+	
+	@GetMapping(value="/getCus/{cus_no}", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public CustomerVO getCus(@PathVariable("cus_no") int cus_no) {
+		return service.getDetail(cus_no);
 	}
 }

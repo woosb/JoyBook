@@ -35,10 +35,14 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public List<BoardVO> selectList(Criteria cri) {		
-		cri.setLimitStart((cri.getPageNum()-1)*10);
 		return mapper.selectList(cri);
 	}
 
+	@Override
+	public List<BoardVO> searchList(String keyword) {
+		return mapper.searchList(keyword);
+	}
+	
 	@Override
 	public BoardVO selectDetail(int id) {
 		return mapper.selectDetail(id);
@@ -69,6 +73,11 @@ public class BoardServiceImpl implements BoardService{
 	public int delete(BoardVO vo) {
 		log.info(vo.toString());
 		return mapper.delete(vo);
+	}
+	
+	@Override
+	public int deleteReply(int id) {
+		return mapper.deleteReply(id);
 	}
 	
 	@Override
@@ -168,4 +177,10 @@ public class BoardServiceImpl implements BoardService{
 		}
 		log.info("추천버튼 눌림");
 	}
+
+	@Override
+	public List<BoardVO> getIndexArticle() {
+		return mapper.getIndexArticle();
+	}
+
 }

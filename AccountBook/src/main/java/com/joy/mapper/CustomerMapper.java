@@ -17,4 +17,6 @@ public interface CustomerMapper {
 	
 	public Integer getTotalCount(Criteria cri);
 	public List<CustomerVO> getAllCustomerWithPaging(Criteria cri);
+	
+	public CustomerVO getDetail(int cus_no);
 }

@@ -45,9 +45,21 @@
 		DELETE from customer_table where cus_no = #{cus_no}
 	</delete>
 	
+	<select id="getDetail" resultType="com.joy.domain.CustomerVO">
+		select * from customer_table where cus_no = #{cus_no}
+	</select>
+	
 	<update id="modifyCustomer">
-		UPDATE customer_table SET visitType = #{visitType}, content = #{content}, 
-			sex = #{sex}, date = #{date}, price = #{price}, reservationRoute = #{reservationRoute},	ticket = #{ticket} where cus_no = #{cus_no};
+		UPDATE customer_table SET 
+			visitType = #{visitType}, 
+			content = #{content}, 
+			sex = #{sex}, 
+			date = #{date}, 
+			price = #{price}, 
+			reservationRoute = #{reservationRoute},	
+			ticket = #{ticket} 
+		where 
+			cus_no = #{cus_no};
 	</update>
 	
 	<select id="getTotalCount" resultType="Integer">
@@ -90,10 +102,9 @@
 		<include refid="criteria"></include>  
 		
 		designer_id = #{designer_id} 
-		order by cus_no desc
+		order by date_format(date,'%Y %m') desc
 		
 		limit #{limitStart}, #{amount}
-		
 	</select>
 	
 </mapper>

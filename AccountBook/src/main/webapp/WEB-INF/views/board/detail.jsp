@@ -90,7 +90,7 @@ function reset(){
 			str += '<div style="margin:10px 0;">'
 			str += '<span>'+result[i].userId+'</span>'
 			str += '&nbsp;&nbsp;<span>'+result[i].content+'</span>'
-			str += '<button style="float:right; margin: 0 5px;">x</button>'
+			str += '<button onclick="removeReply('+result[i].id+')" style="float:right; margin: 0 5px;">x</button>'
 			str += '<span style="float:right;">'+displayTime(result[i].regDate)+'</span>'
 			str += '</div>'
 		}
@@ -100,6 +100,15 @@ function reset(){
 }
 </script>
 <script>
+	function removeReply(id){
+		$.ajax({
+			url:"/board/reply/"+id,
+			type:"delete",
+		}).done(function(){
+			reset();
+		});
+	}
+	
 	function recommend(id){
 		$.ajax({
 			url:"/board/recommend/"+id,

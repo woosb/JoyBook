@@ -19,6 +19,7 @@
 						<th>가격</th>
 						<th>예약경로</th>
 <!-- 						<th>정액권</th> -->
+						<th>수정</th>
 						</tr>
 					</thead>
 					<tfoot>
@@ -31,6 +32,7 @@
 						<th rowspan="1" colspan="1">가격</th>
 						<th rowspan="1" colspan="1">예약경로</th>
 <!-- 						<th rowspan="1" colspan="1">정액권</th> -->
+						<th>수정</th>
 						</tr>
 					</tfoot>
 					<tbody>  
@@ -44,6 +46,7 @@
 							<td><c:out value="${customer.price}원" /></td>
 							<td><c:out value="${customer.reservationRoute}" /></td>
 <%-- 							<td><c:if test="${customer.ticket >= 1}"><c:out value="${customer.ticket }"/>원</c:if></td> --%>
+							<td><a href="/customer/detail/${customer.cus_no }">수정</a></td>
 						</tr>
 						</c:forEach>
 					</tbody>

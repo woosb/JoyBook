@@ -5,24 +5,24 @@
 <%@ include file="../includes/header.jsp" %>
 <main role="main">
 <div class="container" style="margin: 20px 0px;">
-<h1>Styles</h1>
-		<input class="btn btn-secondary" type="button" value="Add More" onclick="self.location='/board/insert'">
+<h1>검색 결과</h1>
+<!-- 		<input class="btn btn-secondary" type="button" value="Add More" onclick="self.location='/board/insert'"> -->
 <hr>
 	<div class="row" id="contents">
         
     </div>  
 <div>
-	<ul class="pagination justify-content-center">
-		<c:if test="${pageMaker.prev}">
-			<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1 }">Previous</a></li>
-		</c:if>
-		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
-			<li class="page-item"><a class="page-link" href="/board/list?pageNum=${num }"><c:out value="${num }"/></a><li>
-		</c:forEach>
-		<c:if test="${pageMaker.next }">
-			<li class="page-item"><a class="page-link" href="${pageMaker.endPage + 1 }">Next</a></li>
-		</c:if>
-	</ul>
+<!-- 	<ul class="pagination justify-content-center"> -->
+<%-- 		<c:if test="${pageMaker.prev}"> --%>
+<%-- 			<li class="page-item"><a class="page-link" href="${pageMaker.startPage -1 }">Previous</a></li> --%>
+<%-- 		</c:if> --%>
+<%-- 		<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}"> --%>
+<%-- 			<li class="page-item"><a class="page-link" href="/board/list?pageNum=${num }"><c:out value="${num }"/></a><li> --%>
+<%-- 		</c:forEach> --%>
+<%-- 		<c:if test="${pageMaker.next }"> --%>
+<%-- 			<li class="page-item"><a class="page-link" href="${pageMaker.endPage + 1 }">Next</a></li> --%>
+<%-- 		</c:if> --%>
+<!-- 	</ul> -->
 </div>
 <form id="actionForm" action="/board/list" method="get">
 	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
@@ -40,7 +40,7 @@
 getContents();
 function getContents(){
 	$.ajax({
-		url:"/board/contents/"+"${pageMaker.cri.pageNum }",
+		url:"/board/search/"+"${keyword }",
 		contentType:"JSON"		
 	}).done(function(result){
 		console.log(result);
