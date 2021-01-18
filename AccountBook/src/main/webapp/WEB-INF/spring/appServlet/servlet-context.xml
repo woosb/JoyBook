@@ -26,9 +26,7 @@
             class="com.joy.interceptor.LoginInterceptor"/>
 	<interceptors>
 	  <interceptor>
-	    <mapping path="/board/*"/>
 	    <mapping path="/customer/*"/>
-	    
 	    <beans:ref bean="LoginInterceptor"/>
 	  </interceptor>
 	</interceptors>
