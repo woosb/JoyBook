@@ -16,6 +16,7 @@ public interface BoardService {
 	public void insert(BoardVO vo);
 	
 	public int delete(BoardVO vo);
+	public int deleteReply(int id);
 	public Integer getRef(int id);
 	
 	public void modify(BoardVO vo);

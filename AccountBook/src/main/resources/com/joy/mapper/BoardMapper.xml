@@ -65,6 +65,12 @@
 		where ref=#{ref}
 	</delete>
 	
+	<delete id="deleteReply">
+		delete from
+			board
+		where id=#{id}
+	</delete>
+	
 	<update id="modify">
 		update 
 			board 

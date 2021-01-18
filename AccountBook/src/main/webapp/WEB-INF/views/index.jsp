@@ -26,7 +26,7 @@
 			펌 계정_ @j._.oy_perm<br>
 			〰️카카오헤어샵 & 네이버예약 20%〰️<br>
 			👇👇예약 링크 👇👇<br>
-			hairshop.kakao.com/shops/45/stylers/53255<br>
+			<a href="https://hairshop.kakao.com/shops/45/stylers/53255">hairshop.kakao.com/shops/45/stylers/53255</a><br>
 			</p>
             <p><a class="btn btn-lg btn-primary" href="/member/signIn" role="button">Sign up today</a></p>
           </div>
