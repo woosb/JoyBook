@@ -27,11 +27,13 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class FileController {
 	
+	static final String IMAGE_DIR = "C:\\imgTest\\";
+	
 	@GetMapping(value="/download/{userId}/{imageFileName:.+}")
 	public void downloadFile(@PathVariable("userId")String userId, @PathVariable("imageFileName")String imageFileName,HttpServletResponse response, HttpSession session) throws IOException {
 		log.info(imageFileName);
 		
-		String IMAGE_REPO = "C:\\imgTest\\" + userId + "\\";
+		String IMAGE_REPO = IMAGE_DIR + userId + "\\";
 		String downFile = IMAGE_REPO + imageFileName;
 		File file = new File(downFile);
 		response.addHeader("Content-disposition", "attachment; fileName="+imageFileName);
@@ -41,7 +43,7 @@ public class FileController {
 		try {
 			in = new FileInputStream(file);
 		}catch(IOException e) {
-			in = new FileInputStream("C:\\imgTest\\default\\default.png" );
+			in = new FileInputStream(IMAGE_DIR+"default\\default.png" );
 			e.printStackTrace();
 		}
 		byte[] buffer = new byte[1024*1024*10];
@@ -64,7 +66,6 @@ public class FileController {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		// 업로드할 폴더 경로
-		String realFolder = "C:\\imgTest";
 		UUID uuid = UUID.randomUUID();
 
 		// 업로드할 파일 이름
@@ -74,7 +75,7 @@ public class FileController {
 		System.out.println("원본 파일명 : " + org_filename);
 		System.out.println("저장할 파일명 : " + str_filename);
 
-		String filepath = realFolder + "\\" + userId + "\\" + str_filename;
+		String filepath = IMAGE_DIR +  userId + "\\" + str_filename;
 		System.out.println("파일경로 : " + filepath);
 
 		File f = new File(filepath);
@@ -92,7 +93,7 @@ public class FileController {
 		UUID uuid = UUID.randomUUID();
 
 		String userId = (String)session.getAttribute("userId");
-		String IMAGE_REPO = "C:\\imgTest\\" + userId + "\\";
+		String IMAGE_REPO = IMAGE_DIR + userId + "\\";
 		System.out.println("update ajax post........");
 		String uploadFolder = IMAGE_REPO;
 		

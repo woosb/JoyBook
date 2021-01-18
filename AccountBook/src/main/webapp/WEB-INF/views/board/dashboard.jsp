@@ -30,6 +30,7 @@
      		</div>
      	</div>
 		<div class="table-responsive" style="padding:30px 30px;">
+			<h2>올해 총 매출</h2>
 			<table class="table table-striped table-sm">
 				<c:forEach items="${annualIncome }"  var="income">
 					<tr>
@@ -38,6 +39,7 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<h4>연도별 매출</h4>
 			<table class="table table-striped table-sm">
 				<tr>
 					<c:forEach items="${AnnualIncomeList }"  var="income">
@@ -51,6 +53,7 @@
 				</tr>
 			</table>
 			<hr>
+			<h2>이번달 총 매출</h2>
 			<table class="table table-striped table-sm">
 				<c:forEach items="${MonthIncome }"  var="income">
 					<tr>
@@ -59,6 +62,7 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<h4>월별 매출</h4>
 			<table class="table table-striped table-sm">
 				<c:forEach items="${MonthlyIncomeList }"  var="income">
 					<tr>
@@ -68,6 +72,7 @@
 				</c:forEach>
 			</table>
 			<hr>
+			<h2>플랫폼별 매출</h2>
 			<table class="table table-striped table-sm">
 				<c:forEach items="${IncomeByReservationRoute }"  var="income">
 					<tr>
@@ -75,6 +80,27 @@
 						<td><c:out value="${ income.income}"/>원</td>
 					</tr>
 				</c:forEach>
+			</table>
+			<h2>신규/재방문 매출</h2>
+			<table class="table table-striped table-sm">
+				<tr>
+					<td></td>
+					<c:forEach items="${getNewCus }"  var="income">
+						<td><c:out value="${ income.date}"/></td>
+					</c:forEach>
+				</tr>
+				<tr>
+					<td>신규</td>
+					<c:forEach items="${getNewCus }"  var="income">
+						<td><c:out value="${ income.income}"/>원</td>
+					</c:forEach>
+				</tr>
+				<tr>
+					<td>재방문</td>
+					<c:forEach items="${getOldCus }"  var="income">
+						<td><c:out value="${ income.income}"/>원</td>
+					</c:forEach>
+				</tr>
 			</table>
 		</div>
 	</div>
@@ -96,6 +122,8 @@ var getOldCus = [];
 <c:forEach items="${getOldCus }"  var="income">
 	getOldCus.push(<c:out value="${ income.income}"/>);
 </c:forEach>
+console.log(getNewCus);
+console.log(getOldCus);
 
 if (chBar) {
   new Chart(chBar, {
@@ -135,9 +163,7 @@ if (chBar) {
 	var income = [];
 	<c:forEach items="${MonthlyIncomeList }"  var="income">
 		income.push(<c:out value="${ income.income}"/>);
-	</c:forEach>
-	console.log(income);
-	
+	</c:forEach>	
 var chLine = document.getElementById("chLine");
 var chartData = {
 	labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],

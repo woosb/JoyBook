@@ -57,7 +57,6 @@
 		
 		<div class="checkbox mb-3">
 		<label>
-		<input type="checkbox" id="customCheck" name="remember-me" value="remember-me"> Remember me
 		</label>
 		</div>
 		<button type="submit" id="signUp" class="btn btn-lg btn-primary btn-block">Register Account</button>
